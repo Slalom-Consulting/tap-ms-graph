@@ -1,13 +1,16 @@
 """REST client handling, including MSGraphStream base class."""
 
-from typing import Any, Dict, Optional, Callable, Generator
+from typing import Any, Callable, Generator, Iterable, Union, Optional
 from enum import Enum
 from singer_sdk.streams import RESTStream
 from tap_ms_graph.auth import MSGraphAuthenticator
 from singer_sdk.pagination import JSONPathPaginator
 from memoization import cached
 from pathlib import Path
-from urllib.parse import urljoin, urlsplit, parse_qs
+from urllib.parse import urljoin
+import uuid
+import requests
+import json
 
 
 SCHEMAS_DIR = Path(__file__).parent / Path('./schemas')
@@ -23,18 +26,17 @@ class MSGraphStream(RESTStream):
     """MSGraph stream class."""
     @property
     def url_base(self) -> str:
-        """Return the API URL root, configurable via tap settings."""
         base = self.config.get('api_url', API_URL)
         version = ApiVersion[self.config.get('api_version')].value
         return urljoin(base, version)
 
     records_jsonpath = '$.value[*]'
-    next_page_token_jsonpath = "$.@odata.nextLink"
+    record_child_context = 'id'
+    next_page_token_jsonpath = '$.@odata.nextLink'
 
     @property
     @cached
     def authenticator(self) -> MSGraphAuthenticator:
-        """Return a new authenticator object."""
         return MSGraphAuthenticator(self)
 
     def get_new_paginator(self) -> JSONPathPaginator:
@@ -42,13 +44,16 @@ class MSGraphStream(RESTStream):
 
     @property
     def http_headers(self) -> dict:
-        """Return the http headers needed."""
         headers = {}
-        
-        if "user_agent" in self.config:
-            headers["User-Agent"] = self.config.get("user_agent")
 
-        #TODO Add special header if specific parameter exists in query
+        if self.get_url_params.get('$count') in ['true', True]:
+            headers['ConsistencyLevel'] = 'eventual'
+
+        if self.config.get('log_requests'):
+            id = str(uuid.uuid4())
+            headers['client-request-id'] = id
+            log_text = json.dumps({'client-request-id': id})
+            self.logger.info(f'Microsoft Graph request log: {log_text}')
         
         return headers
 
@@ -59,8 +64,23 @@ class MSGraphStream(RESTStream):
 
         return self.backoff_runtime(value=_backoff_from_headers)
 
-    def get_url_params(self, context: Optional[dict], next_page_token: Optional[str]) -> Dict[str, Any]:
+    def prepare_request(self, context: Union[dict, None], next_page_token: Union[Any, None]) -> requests.PreparedRequest:
+        prepared_request = super().prepare_request(context, None)
+        
         if next_page_token:
-            return parse_qs(urlsplit(next_page_token).query)
+            prepared_request.url = next_page_token
 
-        return super().get_url_params(context, None)
+        return prepared_request
+
+    def parse_response(self, response: requests.Response) -> Iterable[dict]:
+        if self.config.get('log_requests'):
+            log_keys = ['request-id', 'Date', 'x-ms-ags-diagnostic']
+            log_headers = {k:v for k,v in response.headers if k in log_keys}
+            log_text = json.dumps(log_headers)
+            self.logger.info(f'Microsoft Graph response log: {log_text}')
+
+        return super().parse_response(response)
+    
+    def get_child_context(self, record: dict, context: Optional[dict]) -> dict:
+        if self.record_child_context:
+            return record.get(self.record_child_context)
