@@ -5,27 +5,20 @@ from typing import Any, Dict, Optional, Union, List, Iterable
 from tap_ms_graph.client import MSGraphStream
 
 
-SCHEMAS_DIR = Path(__file__).parent / Path("./schemas")
+SCHEMAS_DIR = Path(__file__).parent / Path('./schemas')
 
 class UsersStream(MSGraphStream):
     """Define custom stream."""
-    name = "users"
-    path = "/users"
-    primary_keys = ["id"]
+    name = 'users'
+    path = '/users'
+    primary_keys = ['id']
     replication_key = None
-    schema_filepath = SCHEMAS_DIR / "users.json"
-
-
-class UserLicenseDetailsStream:
-    name = "users"
-    path = "/users"
-    primary_keys = ["id"]
 
     @property
-    def http_headers(self) -> dict:
-        headers = super().http_headers or {}
-        headers['ConsistencyLevel'] = 'eventual'
+    def schema_filepath(self) -> str:
+        return SCHEMAS_DIR / self.version / 'users.json'
+    
+    @property
+    def query(self):
+        return self.config.get('users_stream_query')
 
-'''
-https://graph.microsoft.com/v1.0/users?$count=true&$filter=assignedLicenses/$count+ne+0+and+accountEnabled+eq+true
-'''

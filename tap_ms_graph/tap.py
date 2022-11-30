@@ -6,7 +6,6 @@ from singer_sdk import typing as th
 
 
 from tap_ms_graph.streams import (
-    MSGraphStream,
     UsersStream,
 )
 
@@ -45,14 +44,15 @@ class TapMSGraph(Tap):
             description='The earliest record date to sync'
         ),
         th.Property(
-            "user_agent",
-            th.StringType,
-            description='User agent to present to the API'
+            "log_requests",
+            th.BooleanType,
+            default=True,
+            description='Log requests sent to the API'
         ),
         th.Property(
             'api_version',
             th.StringType,
-            default='v1',
+            default='v1.0',
             #allowed_values=['v1', 'beta'],
             description='The version of the Microsoft Graph API to use'
         ),
@@ -65,6 +65,11 @@ class TapMSGraph(Tap):
             'api_url',
             th.StringType,
             description='Override the Graph API service base URL. Required if using a national cloud.'
+        ),
+        th.Property(
+            'users_stream_query',
+            th.StringType,
+            description='Query for users stream'
         ),
     ).to_dict()
 
