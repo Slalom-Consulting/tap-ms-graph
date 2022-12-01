@@ -38,17 +38,11 @@ class TapMSGraph(Tap):
             secret=True,
             description='The client secret that you generated for your app in the app registration portal.'
         ),
-        th.Property(
-            'start_date',
-            th.DateTimeType,
-            description='The earliest record date to sync'
-        ),
-        th.Property(
-            "log_requests",
-            th.BooleanType,
-            default=True,
-            description='Log requests sent to the API'
-        ),
+#        th.Property(
+#            'start_date',
+#            th.DateTimeType,
+#            description='The earliest record date to sync'
+#        ),
         th.Property(
             'api_version',
             th.StringType,
@@ -67,9 +61,34 @@ class TapMSGraph(Tap):
             description='Override the Graph API service base URL. Required if using a national cloud.'
         ),
         th.Property(
-            'users_stream_query',
-            th.StringType,
-            description='Query for users stream'
+            'stream_config',
+            th.ArrayType(
+                th.PropertiesList(
+                    th.Property(
+                        'stream',
+                        th.StringType,
+                        description='Name of stream to apply config.'
+                    ),
+                    th.Property(
+                        'params',
+                        th.ArrayType(
+                            th.PropertiesList(
+                                th.Property(
+                                    'param',
+                                    th.StringType,
+                                    description='Name of query parameter.'
+                                ),
+                                th.Property(
+                                    'value',
+                                    th.StringType,
+                                    description='Value of query parameter.'
+                                )
+                            )
+                        )
+                    )
+                )
+            ),
+            description='Custom config for stream.'
         ),
     ).to_dict()
 
