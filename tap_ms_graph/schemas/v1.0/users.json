@@ -37,6 +37,9 @@
     "id": {
       "type": "string"
     },
+    "userType": {
+      "type": "string"
+    },
     "assignedLicenses": {
       "type": "array",
       "items": {
@@ -69,6 +72,35 @@
             "type": "string"
           },
           "servicePlanId": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "licenseAssignmentStates": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "skuId": {
+            "type": "string"
+          },
+          "disabledPlans": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "assignedByGroup": {
+            "type": "string"
+          },
+          "state": {
+            "type": "string"
+          },
+          "error": {
+            "type": "string"
+          },
+          "lastUpdatedDateTime": {
             "type": "string"
           }
         }
