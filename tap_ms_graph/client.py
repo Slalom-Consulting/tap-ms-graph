@@ -30,7 +30,7 @@ class MSGraphStream(RESTStream):
     @property
     def schema_filepath(self) -> str:
         #return f'{SCHEMAS_DIR}/{self.api_version}/{self.schema_filename}'
-        return f'{SCHEMAS_DIR}/{self.schema_filename}'
+        return f'{SCHEMAS_DIR}/v1.0/{self.schema_filename}'
 
     @property
     def url_base(self) -> str:
