@@ -36,6 +36,43 @@
     },
     "id": {
       "type": "string"
+    },
+    "assignedLicenses": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "disabledPlans": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "skuId": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "assignedPlans": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "assignedDateTime": {
+            "type": "string"
+          },
+          "capabilityStatus": {
+            "type": "string"
+          },
+          "service": {
+            "type": "string"
+          },
+          "servicePlanId": {
+            "type": "string"
+          }
+        }
+      }
     }
   }
 }
