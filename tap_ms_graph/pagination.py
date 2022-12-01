@@ -2,7 +2,6 @@ from singer_sdk.pagination import BaseAPIPaginator
 from typing import Optional, Any
 from requests import Response
 
-NEXT_LINK_KEY = '@odata.nextLink'
 
 class MSGraphPaginator(BaseAPIPaginator):
     def __init__(
@@ -13,4 +12,4 @@ class MSGraphPaginator(BaseAPIPaginator):
         super().__init__(None, *args, **kwargs)
 
     def get_next(self, response: Response) -> Optional[str]:
-        return response.json().get(NEXT_LINK_KEY)
+        return response.json().get('@odata.nextLink')
