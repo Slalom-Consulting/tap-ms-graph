@@ -3,8 +3,15 @@
 from tap_ms_graph.client import MSGraphStream
 
 
+class SubscribedSkusStream(MSGraphStream):
+    name = 'subscribedSkus'
+    path = '/subscribedSkus'
+    primary_keys = ['id']
+    replication_key = None
+    schema_filename = 'subscribedSkus.json'
+
+
 class UsersStream(MSGraphStream):
-    """Define custom stream."""
     name = 'users'
     path = '/users'
     primary_keys = ['id']
