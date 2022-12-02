@@ -38,28 +38,6 @@ class TapMSGraph(Tap):
             secret=True,
             description='The client secret that you generated for your app in the app registration portal.'
         ),
-#        th.Property(
-#            'start_date',
-#            th.DateTimeType,
-#            description='The earliest record date to sync'
-#        ),
-        th.Property(
-            'api_version',
-            th.StringType,
-            default='v1.0',
-            #allowed_values=['v1', 'beta'],
-            description='The version of the Microsoft Graph API to use'
-        ),
-        th.Property(
-            'auth_url',
-            th.StringType,
-            description='Override the Azure AD authentication base URL. Required if using a national cloud.'
-        ),
-        th.Property(
-            'api_url',
-            th.StringType,
-            description='Override the Graph API service base URL. Required if using a national cloud.'
-        ),
         th.Property(
             'stream_config',
             th.ArrayType(
@@ -88,7 +66,29 @@ class TapMSGraph(Tap):
                     )
                 )
             ),
-            description='Custom config for stream.'
+            description='Custom configuration for streams.'
+        ),
+#        th.Property(
+#            'start_date',
+#            th.DateTimeType,
+#            description='The earliest record date to sync'
+#        ),
+        th.Property(
+            'api_version',
+            th.StringType,
+            default='v1.0',
+            #allowed_values=['v1', 'beta'],
+            description='The version of the Microsoft Graph API to use'
+        ),
+        th.Property(
+            'auth_url',
+            th.StringType,
+            description='Override the Azure AD authentication base URL. Required if using a national cloud.'
+        ),
+        th.Property(
+            'api_url',
+            th.StringType,
+            description='Override the Graph API service base URL. Required if using a national cloud.'
         ),
     ).to_dict()
 

@@ -2,7 +2,7 @@
 
 `tap-ms-graph` is a Singer tap for MSGraph.
 
-Built with the [Meltano Tap SDK](https://sdk.meltano.com) for Singer Taps.
+Built with the [Meltano Tap SDK](https://sdk.meltano.com) for Singer Taps and the [Microsoft Graph API reference](https://learn.microsoft.com/en-us/graph/api/overview?view=graph-rest-1.0&preserve-view=true).
 
 <!--
 
@@ -38,12 +38,42 @@ tap-ms-graph --about --format=markdown
 ```
 -->
 
+## Settings
+
+| Setting             | Required | Default | Description |
+|:--------------------|:--------:|:-------:|:------------|
+| tenant              | True     | None    | The directory tenant that you want to request permission from. The value can be in GUID or a friendly name format. |
+| client_id           | True     | None    | The application ID that the Azure app registration portal assigned when you registered your app. |
+| client_secret       | True     | None    | The client secret that you generated for your app in the app registration portal. |
+| stream_config       | False    | None    | Custom configuration for streams. |
+| api_version         | False    | v1.0    | The version of the Microsoft Graph API to use |
+| auth_url            | False    | None    | Override the Azure AD authentication base URL. Required if using a national cloud. |
+| api_url             | False    | None    | Override the Graph API service base URL. Required if using a national cloud. |
+
+
 A full list of supported settings and capabilities for this
 tap is available by running:
 
 ```bash
 tap-ms-graph --about
 ```
+
+### Custom Stream Configuration
+Many streams support [advanced query capabilities](https://learn.microsoft.com/en-us/graph/aad-advanced-queries?tabs=http) (eg. `$count`, `$select`, `$filter`, `$search`, `$orderby`, ...) and can be added to the tap configuration json:
+
+```json
+"stream_config": [
+    {
+        "stream": "{stream_name}",
+        "params": [
+            {"param": "{parameter_name}", "value": "{parameter_value}"},
+            ...
+        ]
+    },
+    ...
+]
+```
+
 
 ### Configure using environment variables
 
