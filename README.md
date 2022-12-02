@@ -15,14 +15,14 @@ Install from PyPi:
 ```bash
 pipx install tap-ms-graph
 ```
+-->
 
 Install from GitHub:
 
 ```bash
-pipx install git+https://github.com/ORG_NAME/tap-ms-graph.git@main
+pipx install git+https://github.com/Slalom-Consulting/tap-ms-graph.git@main
 ```
 
--->
 
 ## Configuration
 
@@ -38,7 +38,6 @@ tap-ms-graph --about --format=markdown
 ```
 -->
 
-## Settings
 
 | Setting             | Required | Default | Description |
 |:--------------------|:--------:|:-------:|:------------|
