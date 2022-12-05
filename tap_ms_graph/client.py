@@ -45,11 +45,14 @@ class MSGraphStream(RESTStream):
     @property
     def http_headers(self) -> dict:
         headers = {}
+
+        # Set ConsistencyLevel for count operations
         params = self.get_url_params(None, None) or {}
 
         if str(params.get('$count')).lower() == 'true':
             headers['ConsistencyLevel'] = 'eventual'
 
+        # Request logging
         id = str(uuid.uuid4())
         headers['client-request-id'] = id
         log_text = json.dumps({'client-request-id': id})
@@ -72,15 +75,30 @@ class MSGraphStream(RESTStream):
     ) -> Dict[str, Any]:
         stream_config = self.config.get('stream_config')
         
+        # Apply custom stream config
         if stream_config:
-            params = [c.get('params') for c in stream_config if c.get('stream') == self.name]
+            stream_params = [c.get('params') for c in stream_config if c.get('stream') == self.name]
             
-            if params:
-                return {p.get('param'):p.get('value') for p in params[-1]}
+            if stream_params:
+                params = {p.get('param'):p.get('value') for p in stream_params[-1]}
+
+                # Ensure that primary keys are included in optional select parameter for targets
+                select_text: str = params.get('$select')
+                
+                if select_text:
+                    select_fields = str(select_text).split(',')
+                    missing_keys = [k for k in self.primary_keys if k not in select_fields]
+                    
+                    if missing_keys:
+                        missing_text = ','.join(missing_keys)
+                        params['$select'] = f'{missing_text},{select_text}'
+
+                return params
 
     def prepare_request(
         self, context: Union[dict, None], next_page_token: Union[Any, None]
     ) -> requests.PreparedRequest:
+        # Pass next page url through to request
         prepared_request = super().prepare_request(context, None)
 
         if next_page_token:
@@ -89,6 +107,7 @@ class MSGraphStream(RESTStream):
         return prepared_request
 
     def parse_response(self, response: requests.Response) -> Iterable[dict]:
+        # Response logging
         headers = response.headers
 
         logging_headers = {
