@@ -80,19 +80,31 @@ class MSGraphStream(RESTStream):
             stream_params = [c.get('params') for c in stream_config if c.get('stream') == self.name]
             
             if stream_params:
-                params = {p.get('param'):p.get('value') for p in stream_params[-1]}
+                params: dict = stream_params[-1].copy()
 
-                # Ensure that primary keys are included in optional select parameter for targets
-                select_text: str = params.get('$select')
-                
-                if select_text:
-                    select_fields = str(select_text).split(',')
-                    missing_keys = [k for k in self.primary_keys if k not in select_fields]
+                # Ensure that $count is true when used in $filter parameter
+                filter_param = params.get('$filter')
+                if filter_param:
+                    if '$count' in filter_param:
+                        if not params.get('$count'):
+                            params['$count'] = True
+
+                # Ensure that primary keys are included in $select parameter for target
+                select_param = params.get('$select')
+                print(select_param)
+                if select_param:
+                    #if is_str(select_param): select_param = str(select_param).split(',')
+                    missing_primary_keys = [k for k in self.primary_keys if k not in select_param]
+                    if missing_primary_keys:
+                        select_param = missing_primary_keys.extend(select_param)
                     
-                    if missing_keys:
-                        missing_text = ','.join(missing_keys)
-                        params['$select'] = f'{missing_text},{select_text}'
+                    params['$select'] = ','.join(select_param)
 
+                # Convert orderby to string
+                orderby_param = params.get('$orderby')
+                if orderby_param:
+                    params['$orderby'] = ','.join(select_param)
+                print(params)
                 return params
 
     def prepare_request(
