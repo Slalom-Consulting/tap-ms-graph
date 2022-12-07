@@ -91,7 +91,6 @@ class MSGraphStream(RESTStream):
 
                 # Ensure that primary keys are included in $select parameter for target
                 select_param = params.get('$select')
-                print(select_param)
                 if select_param:
                     #if is_str(select_param): select_param = str(select_param).split(',')
                     missing_primary_keys = [k for k in self.primary_keys if k not in select_param]
@@ -104,7 +103,7 @@ class MSGraphStream(RESTStream):
                 orderby_param = params.get('$orderby')
                 if orderby_param:
                     params['$orderby'] = ','.join(select_param)
-                print(params)
+                
                 return params
 
     def prepare_request(
