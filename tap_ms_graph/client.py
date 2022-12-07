@@ -25,12 +25,12 @@ class MSGraphStream(RESTStream):
 
     @property
     def api_version(self) -> str:
+        """Get API version"""
         return self.config.get('api_version')
 
     @property
     def schema_filepath(self) -> str:
-        #return f'{SCHEMAS_DIR}/{self.api_version}/{self.schema_filename}'
-        return f'{SCHEMAS_DIR}/v1.0/{self.schema_filename}'
+        return f'{SCHEMAS_DIR}/{self.api_version}/{self.schema_filename}'
 
     @property
     def url_base(self) -> str:
@@ -98,7 +98,7 @@ class MSGraphStream(RESTStream):
     def prepare_request(
         self, context: Union[dict, None], next_page_token: Union[Any, None]
     ) -> requests.PreparedRequest:
-        # Pass next page url through to request
+        # Pass next page url through to request as opaque string
         prepared_request = super().prepare_request(context, None)
 
         if next_page_token:
