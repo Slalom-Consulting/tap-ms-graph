@@ -7,10 +7,12 @@ from singer_sdk import typing as th
 
 from tap_ms_graph.streams import (
     UsersStream,
+    UserEventsStream,
 )
 
 STREAM_TYPES = [
     UsersStream,
+    UserEventsStream
 ]
 
 

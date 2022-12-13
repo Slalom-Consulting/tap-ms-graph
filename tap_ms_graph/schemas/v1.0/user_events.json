@@ -1,0 +1,40 @@
+{
+    "type": "object",
+    "properties": {
+        "attendees": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "emailAddress": {
+                        "type": "object",
+                        "properties": {
+                            "address": {
+                                "type": "string"
+                            },
+                            "name": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "proposedNewTime": {
+                        "type": "object",
+                        "properties": {
+                            "end": {
+                                "type": "object",
+                                "properties": {
+                                    "dateTime": {
+                                        "type": "string"
+                                    },
+                                    "timeZone": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

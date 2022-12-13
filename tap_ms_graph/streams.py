@@ -17,3 +17,33 @@ class UsersStream(MSGraphStream):
     primary_keys = ['id']
     replication_key = None
     schema_filename = 'users.json'
+
+    def get_child_context(self, record: dict, context) -> dict:
+        """Return a context dictionary for child streams."""
+        return {
+            "user_id": record["id"],
+        }
+
+class UserEventsStream(MSGraphStream):
+    name = 'events'
+    parent_stream_type = UsersStream
+    path = '/users/{user_id}/calendar/events'
+    primary_keys = ['id']
+    replication_key = None
+    schema_filename = 'user_events.json'
+    
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.is_notfound = False
+
+    def get_records(self, context=None):
+        if self.is_notfound:
+            return []
+        return super().get_records(context)
+
+
+    def validate_response(self, response) -> None:
+        if response.status_code == 404:
+            self.is_notfound = True
+            return
+        return super().validate_response(response)
