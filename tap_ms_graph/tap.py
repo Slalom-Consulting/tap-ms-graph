@@ -8,11 +8,13 @@ from singer_sdk import typing as th
 from tap_ms_graph.streams import (
     UsersStream,
     UserEventsStream,
+    UserMessagesStream,
 )
 
 STREAM_TYPES = [
     UsersStream,
-    UserEventsStream
+    UserEventsStream,
+    UserMessagesStream
 ]
 
 
