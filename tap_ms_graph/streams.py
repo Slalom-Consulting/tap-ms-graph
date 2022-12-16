@@ -27,17 +27,18 @@ class UsersStream(MSGraphStream):
 class UserEventsStream(MSGraphStream):
     name = 'events'
     parent_stream_type = UsersStream
-    path = '/users/{user_id}/calendar/events'
+    path = '/users/{user_id}/events'
     primary_keys = ['id']
     replication_key = None
     schema_filename = 'user_events.json'
-    
+
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.is_notfound = False
 
     def get_records(self, context=None):
         if self.is_notfound:
+            self.is_notfound = False
             return []
         return super().get_records(context)
 

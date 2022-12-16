@@ -24,6 +24,9 @@ plugins:
       kind: password
     - name: start_date
       value: '2010-01-01T00:00:00Z'
+    - name: tenant
+    - name: client_id
+    - name: client_secret
   loaders:
   - name: target-jsonl
     variant: andyh1203

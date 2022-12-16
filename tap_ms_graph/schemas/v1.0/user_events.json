@@ -1,33 +1,358 @@
 {
-    "type": "object",
+    "type": ["object", "null"],
     "properties": {
+        "id": {
+            "type": ["string", "null"]
+        },
+        "iCalUId": {
+            "type": [
+                "string",
+                "null"
+            ]
+        },
+        "importance": {
+            "type": [
+                "string",
+                "null"
+            ]
+        },
+        "isAllDay": {
+            "type": "boolean"
+        },
+        "isCancelled": {
+            "type": "boolean"
+        },
+        "isDraft": {
+            "type": "boolean"
+        },
+        "isOnlineMeeting": {
+            "type": "boolean"
+        },
+        "allowNewTimeProposals": {
+            "type": "boolean"
+        },
+        "isOrganizer": {
+            "type": "boolean"
+        },
+        "isReminderOn": {
+            "type": "boolean"
+        },
+        "hasAttachments": {
+            "type": "boolean"
+        },
+        "responseRequested": {
+            "type": "boolean"
+        },
+        "hideAttendees": {
+            "type": "boolean"
+        },
+        "createdDateTime": {
+            "type": ["string", "null"]
+        },
+        "end": {
+            "type": ["object", "null"],
+            "properties": {
+                "dateTime": {
+                    "type": ["string", "null"]
+                },
+                "timeZone": {
+                    "type": ["string", "null"]
+                }
+            }
+        },
+        "location": {
+            "type": ["object", "null"],
+            "properties": {
+                "address": {
+                    "type": ["object", "null"],
+                    "properties": {
+                        "city": {
+                            "type": ["string", "null"]
+                        },
+                        "countryOrRegion": {
+                            "type": ["string", "null"]
+                        },
+                        "postalCode": {
+                            "type": ["string", "null"]
+                        },
+                        "state": {
+                            "type": ["string", "null"]
+                        },
+                        "street": {
+                            "type": ["string", "null"]
+                        }
+                    }
+                },
+                "coordinates": {
+                    "type": ["object", "null"],
+                    "properties": {
+                        "accuracy": {
+                            "type": "number"
+                        },
+                        "altitude": {
+                            "type": "number"
+                        },
+                        "altitudeAccuracy": {
+                            "type": "number"
+                        },
+                        "latitude": {
+                            "type": "number"
+                        },
+                        "longitude": {
+                            "number": "string"
+                        }
+                    }
+                },
+                "displayName": {
+                    "type": ["string", "null"]
+                },
+                "locationEmailAddress": {
+                    "type": ["string", "null"]
+                },
+                "locationUri": {
+                    "type": ["string", "null"]
+                },
+                "locationType": {
+                    "type": ["string", "null"]
+                },
+                "uniqueId": {
+                    "type": ["string", "null"]
+                },
+                "uniqueIdType": {
+                    "type": ["string", "null"]
+                }
+            }
+        },
+        "onlineMeeting": {
+            "type": ["object", "null"],
+            "properties": {
+                "conferenceId": {
+                    "type": ["string", "null"]
+                },
+                "joinUrl": {
+                    "type": ["string", "null"]
+                },
+                "phones": {
+                    "type": "array",
+                    "items": {
+                        "type": ["object", "null"],
+                        "properties": {
+                            "number": {
+                                "type": ["string", "null"]
+                            },
+                            "type": {
+                                "type": ["string", "null"]
+                            }
+                        }
+                    }
+                },
+                "quickDial": {
+                    "type": ["string", "null"]
+                },
+                "tollFreeNumbers": {
+                    "type": "array",
+                    "items": {
+                        "type": ["string", "null"]
+                    }
+                },
+                "tollNumber": {
+                    "type": ["string", "null"]
+                }
+            }
+        },
+        "lastModifiedDateTime": {
+            "type": ["string", "null"]
+        },
+        "responseStatus": {
+            "type": ["object", "null"],
+            "properties": {
+                "response": {
+                    "type": ["string", "null"]
+                },
+                "time": {
+                    "type": ["string", "null"]
+                }
+            }
+        },
+        "onlineMeetingProvider": {
+            "type": ["string", "null"]
+        },
+        "sensitivity": {
+            "type": ["string", "null"]
+        },
+        "subject": {
+            "type": ["string", "null"]
+        },
+        "type": {
+            "type": ["string", "null"]
+        },
+        "webLink": {
+            "type": ["string", "null"]
+        },
+        "start": {
+            "type": ["object", "null"],
+            "properties": {
+                "dateTime": {
+                    "type": ["string", "null"]
+                },
+                "timeZone": {
+                    "type": ["string", "null"]
+                }
+            }
+        },
+        "seriesMasterId": {
+            "type": ["string", "null"]
+        },
+        "showAs": {
+            "type": ["string", "null"]
+        },
+        "onlineMeetingUrl": {
+            "type": ["string", "null"]
+        },
+        "originalEndTimeZone": {
+            "type": ["string", "null"]
+        },
+        "originalStart": {
+            "type": ["string", "null"]
+        },
+        "originalStartTimeZone": {
+            "type": ["string", "null"]
+        },
+        "recurrence": {
+            "type": ["object", "null"],
+            "properties": {
+                "pattern": {
+                    "type": ["object", "null"],
+                    "properties": {
+                        "dayOfMonth": {
+                            "type": "number"
+                        },
+                        "interval": {
+                            "type": "number"
+                        },
+                        "month": {
+                            "type": "number"
+                        },
+                        "firstDayOfWeek": {
+                            "type": ["string", "null"]
+                        },
+                        "type": {
+                            "type": ["string", "null"]
+                        },
+                        "index": {
+                            "type": ["string", "null"]
+                        },
+                        "daysOfWeek": {
+                            "type": "array",
+                            "items": {
+                                "type": ["string", "null"]
+                            }
+                        }
+                    }
+                },
+                "range": {
+                    "type": ["object", "null"],
+                    "properties": {
+                        "endDate": {
+                            "type": ["string", "null"]
+                        },
+                        "numberOfOccurrences": {
+                            "type": "number"
+                        },
+                        "recurrenceTimeZone": {
+                            "type": ["string", "null"]
+                        },
+                        "startDate": {
+                            "type": ["string", "null"]
+                        },
+                        "type": {
+                            "type": ["string", "null"]
+                        }
+                    }
+                }
+            }
+        },
+        "organizer": {
+            "type": ["object", "null"],
+            "properties": {
+                "emailAddress": {
+                    "type": ["object", "null"],
+                    "properties": {
+                        "address": {
+                            "type": ["string", "null"]
+                        },
+                        "name": {
+                            "type": ["string", "null"]
+                        }
+                    }
+                }
+            }
+        },
+        "changeKey": {
+            "type": [
+                "string",
+                "null"
+            ]
+        },
+        "reminderMinutesBeforeStart": {
+            "type": [
+                "number",
+                "null"
+            ]
+        },
+        "bodyPreview": {
+            "type": [
+                "string",
+                "null"
+            ]
+        },
+        "categories": {
+            "type": "array",
+            "items": {
+                "type": [
+                    "string",
+                    "null"
+                ]
+            }
+        },
+        "body": {
+            "type": ["object", "null"],
+            "properties": {
+                "content": {
+                    "type": ["string", "null"]
+                },
+                "contentType": {
+                    "type": ["string", "null"]
+                }
+            }
+        },
         "attendees": {
             "type": "array",
             "items": {
-                "type": "object",
+                "type": ["object", "null"],
                 "properties": {
                     "emailAddress": {
-                        "type": "object",
+                        "type": ["object", "null"],
                         "properties": {
                             "address": {
-                                "type": "string"
+                                "type": ["string", "null"]
                             },
                             "name": {
-                                "type": "string"
+                                "type": ["string", "null"]
                             }
                         }
                     },
                     "proposedNewTime": {
-                        "type": "object",
+                        "type": ["object", "null"],
                         "properties": {
                             "end": {
-                                "type": "object",
+                                "type": ["object", "null"],
                                 "properties": {
                                     "dateTime": {
-                                        "type": "string"
+                                        "type": ["string", "null"]
                                     },
                                     "timeZone": {
-                                        "type": "string"
+                                        "type": ["string", "null"]
                                     }
                                 }
                             }
