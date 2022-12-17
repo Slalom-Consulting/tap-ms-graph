@@ -60,8 +60,7 @@
         },
         "end": {
             "type": [
-                "object",
-                "null"
+                "object"
             ],
             "properties": {
                 "dateTime": {
@@ -555,8 +554,7 @@
                         "properties": {
                             "end": {
                                 "type": [
-                                    "object",
-                                    "null"
+                                    "object"
                                 ],
                                 "properties": {
                                     "dateTime": {
