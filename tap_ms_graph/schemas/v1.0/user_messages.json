@@ -14,8 +14,7 @@
                 "properties": {
                     "emailAddress": {
                         "type": [
-                            "object",
-                            "null"
+                            "object"
                         ],
                         "properties": {
                             "address": {
@@ -80,8 +79,7 @@
                 "properties": {
                     "emailAddress": {
                         "type": [
-                            "object",
-                            "null"
+                            "object"
                         ],
                         "properties": {
                             "address": {
@@ -204,8 +202,7 @@
             "properties": {
                 "emailAddress": {
                     "type": [
-                        "object",
-                        "null"
+                        "object"
                     ],
                     "properties": {
                         "address": {
@@ -300,8 +297,7 @@
                 "properties": {
                     "emailAddress": {
                         "type": [
-                            "object",
-                            "null"
+                            "object"
                         ],
                         "properties": {
                             "address": {
@@ -329,8 +325,7 @@
             "properties": {
                 "emailAddress": {
                     "type": [
-                        "object",
-                        "null"
+                        "object"
                     ],
                     "properties": {
                         "address": {
@@ -371,8 +366,7 @@
                 "properties": {
                     "emailAddress": {
                         "type": [
-                            "object",
-                            "null"
+                            "object"
                         ],
                         "properties": {
                             "address": {
