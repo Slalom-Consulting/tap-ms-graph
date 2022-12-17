@@ -141,7 +141,7 @@
                             "type": "number"
                         },
                         "longitude": {
-                            "number": "string"
+                            "type": "number"
                         }
                     }
                 },
