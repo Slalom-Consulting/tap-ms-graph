@@ -4,7 +4,7 @@ import json
 import uuid
 from pathlib import Path
 from typing import Any, Dict, Generator, Iterable, Optional, Union
-from urllib.parse import urljoin
+from urllib.parse import urljoin, parse_qsl
 
 import requests
 from singer_sdk.streams import RESTStream
@@ -21,8 +21,8 @@ class MSGraphStream(RESTStream):
 
     records_jsonpath = "$.value[*]"
     record_child_context = "id"
-    schema_filename: str = ''  # configure per stream
-    primary_keys = [] # configure per stream
+    schema_filename: str = ""  # configure per stream
+    primary_keys = []  # configure per stream
 
     @property
     def api_version(self) -> str:
@@ -70,21 +70,29 @@ class MSGraphStream(RESTStream):
     def get_new_paginator(self) -> MSGraphPaginator:
         return MSGraphPaginator()
 
-    def get_strem_config(self) -> dict:
-        """Applies parameters set in config."""
+    def _get_strem_config(self) -> dict:
+        """Get parameters set in config."""
         config: dict = {}
 
-        stream_config = self.config.get("stream_config", [])
-        if not stream_config:
+        stream_configs = self.config.get("stream_config", [])
+        if not stream_configs:
             return config
 
-        config_dict: dict = stream_config[0]
-        return config_dict.get(self.name, config)
+        config_list = [
+            conf for conf in stream_configs if conf.get("stream") == self.name
+        ] or [None]
+        config_dict = config_list[-1] or {}
+        stream_config = {k: v for k, v in config_dict.items() if k != "stream"}
+        return stream_config
+
+    def _get_stream_params(self) -> dict:
+        stream_params = self._get_strem_config().get("parameters", "")
+        return {qry[0]: qry[1] for qry in parse_qsl(stream_params.lstrip("?"))}
 
     def get_url_params(
         self, context: Optional[dict], next_page_token: Optional[Any]
     ) -> Dict[str, Any]:
-        params = self.get_strem_config().get('parameters', {})
+        params = self._get_stream_params()
 
         # Ensure that $count is True when used in $filter parameter
         filter_params = params.get("$filter", str)
@@ -95,9 +103,9 @@ class MSGraphStream(RESTStream):
         # Ensure that primary keys are included in $select parameter
         select_param = params.get("$select", [])
         if select_param:
-            #if isinstance(select_param, str):
+            # if isinstance(select_param, str):
             #    select_param = select_param.split(',')
-                
+
             missing_primary_keys = [
                 k for k in self.primary_keys if k not in select_param
             ]
@@ -143,8 +151,8 @@ class MSGraphStream(RESTStream):
 
     def get_child_context(self, record: dict, context: Optional[dict]) -> dict:
         child_context = {}
-        
+
         if self.record_child_context:
             child_context = record[self.record_child_context]
-        
+
         return child_context
