@@ -3,11 +3,10 @@
 import json
 import uuid
 from pathlib import Path
-from typing import Any, Callable, Dict, Generator, Iterable, Optional, Union
+from typing import Any, Dict, Generator, Iterable, Optional, Union
 from urllib.parse import urljoin
 
 import requests
-from memoization import cached
 from singer_sdk.streams import RESTStream
 
 from tap_ms_graph.auth import MSGraphAuthenticator
@@ -22,16 +21,18 @@ class MSGraphStream(RESTStream):
 
     records_jsonpath = "$.value[*]"
     record_child_context = "id"
-    schema_filename: str = None  # configure per stream
+    schema_filename: str = ''  # configure per stream
+    primary_keys = [] # configure per stream
 
     @property
     def api_version(self) -> str:
         """Get API version"""
-        return self.config.get("api_version")
+        return str(self.config.get("api_version"))
 
     @property
     def schema_filepath(self) -> str:
-        return f"{SCHEMAS_DIR}/{self.api_version}/{self.schema_filename}"
+        api_path = SCHEMAS_DIR.joinpath(self.api_version)
+        return str(api_path.joinpath(self.schema_filename))
 
     @property
     def url_base(self) -> str:
@@ -39,7 +40,6 @@ class MSGraphStream(RESTStream):
         return urljoin(base, self.api_version)
 
     @property
-    @cached
     def authenticator(self) -> MSGraphAuthenticator:
         return MSGraphAuthenticator(self)
 
@@ -49,11 +49,10 @@ class MSGraphStream(RESTStream):
 
         # Set ConsistencyLevel for count operations
         params = self.get_url_params(None, None) or {}
-
         if str(params.get("$count")).lower() == "true":
             headers["ConsistencyLevel"] = "eventual"
 
-        # Request logging
+        # Configure request logging
         id = str(uuid.uuid4())
         headers["client-request-id"] = id
         log_text = json.dumps({"client-request-id": id})
@@ -61,7 +60,7 @@ class MSGraphStream(RESTStream):
 
         return headers
 
-    def backoff_wait_generator(self) -> Callable[..., Generator[int, Any, None]]:
+    def backoff_wait_generator(self) -> Generator[int, Any, None]:
         def _backoff_from_headers(retriable_api_error) -> int:
             response_headers = retriable_api_error.response.headers
             return int(response_headers.get("Retry-After", 0))
@@ -71,45 +70,49 @@ class MSGraphStream(RESTStream):
     def get_new_paginator(self) -> MSGraphPaginator:
         return MSGraphPaginator()
 
+    def get_strem_config(self) -> dict:
+        """Applies parameters set in config."""
+        config: dict = {}
+
+        stream_config = self.config.get("stream_config", [])
+        if not stream_config:
+            return config
+
+        config_dict: dict = stream_config[0]
+        return config_dict.get(self.name, config)
+
     def get_url_params(
         self, context: Optional[dict], next_page_token: Optional[Any]
     ) -> Dict[str, Any]:
-        stream_config = self.config.get("stream_config")
+        params = self.get_strem_config().get('parameters', {})
 
-        # Apply custom stream config
-        if stream_config:
-            stream_params = [
-                c.get("params") for c in stream_config if c.get("stream") == self.name
+        # Ensure that $count is True when used in $filter parameter
+        filter_params = params.get("$filter", str)
+        if filter_params:
+            if "$count" in filter_params:
+                params["$count"] = True
+
+        # Ensure that primary keys are included in $select parameter
+        select_param = params.get("$select", [])
+        if select_param:
+            #if isinstance(select_param, str):
+            #    select_param = select_param.split(',')
+                
+            missing_primary_keys = [
+                k for k in self.primary_keys if k not in select_param
             ]
 
-            if stream_params:
-                params: dict = stream_params[-1].copy()
+            if missing_primary_keys:
+                select_param.extend(missing_primary_keys)
 
-                # Ensure that $count is true when used in $filter parameter
-                filter_param = params.get("$filter")
-                if filter_param:
-                    if "$count" in filter_param:
-                        if not params.get("$count"):
-                            params["$count"] = True
+            params["$select"] = ",".join(select_param)
 
-                # Ensure that primary keys are included in $select parameter for target
-                select_param = params.get("$select")
-                if select_param:
-                    # if is_str(select_param): select_param = str(select_param).split(',')
-                    missing_primary_keys = [
-                        k for k in self.primary_keys if k not in select_param
-                    ]
-                    if missing_primary_keys:
-                        select_param = missing_primary_keys.extend(select_param)
+        # Convert orderby to string
+        orderby_param = params.get("$orderby", [])
+        if orderby_param:
+            params["$orderby"] = ",".join(orderby_param)
 
-                    params["$select"] = ",".join(select_param)
-
-                # Convert orderby to string
-                orderby_param = params.get("$orderby")
-                if orderby_param:
-                    params["$orderby"] = ",".join(select_param)
-
-                return params
+        return params
 
     def prepare_request(
         self, context: Union[dict, None], next_page_token: Union[Any, None]
@@ -130,7 +133,7 @@ class MSGraphStream(RESTStream):
             "client-request-id": headers.get("client-request-id"),
             "request-id": headers.get("request-id"),
             "Date": headers.get("Date"),
-            "x-ms-ags-diagnostic": json.loads(headers.get("x-ms-ags-diagnostic")),
+            "x-ms-ags-diagnostic": json.loads(str(headers.get("x-ms-ags-diagnostic"))),
         }
 
         log_text = json.dumps(logging_headers)
@@ -139,5 +142,9 @@ class MSGraphStream(RESTStream):
         return super().parse_response(response)
 
     def get_child_context(self, record: dict, context: Optional[dict]) -> dict:
+        child_context = {}
+        
         if self.record_child_context:
-            return record.get(self.record_child_context)
+            child_context = record[self.record_child_context]
+        
+        return child_context
