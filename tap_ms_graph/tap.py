@@ -37,11 +37,6 @@ class TapMSGraph(Tap):
             secret=True,
             description="The client secret generated for the app in the app registration portal.",
         ),
-        #        th.Property(
-        #            'start_date',
-        #            th.DateTimeType,
-        #            description='The earliest record date to sync'
-        #        ),
         th.Property(
             "stream_config",
             th.ArrayType(
@@ -77,51 +72,6 @@ class TapMSGraph(Tap):
                         th.StringType,
                         description="URL formatted parameters string to be used for stream.",
                     ),
-                    # th.Property(
-                    #    "parameters",
-                    #    th.PropertiesList(
-                    #        th.Property(
-                    #            "$count",
-                    #            th.BooleanType,
-                    #            description="Retrieves the total count of matching resources.",
-                    #        ),
-                    #        th.Property(
-                    #            "$expand",
-                    #            th.StringType,
-                    #            description="Retrieves related resources.",
-                    #        ),
-                    #        th.Property(
-                    #            "$filter",
-                    #            th.StringType,
-                    #            description="Filters results (rows).",
-                    #        ),
-                    #        th.Property(
-                    #            "$orderby",
-                    #            th.ArrayType(th.StringType),
-                    #            description="Orders results.",
-                    #        ),
-                    #        th.Property(
-                    #            "$search",
-                    #            th.StringType,
-                    #            description="Returns results based on search criteria.",
-                    #        ),
-                    #        th.Property(
-                    #            "$select",
-                    #            th.ArrayType(th.StringType),
-                    #            description="Filters properties (columns).",
-                    #        ),
-                    #        th.Property(
-                    #            "$skip",
-                    #            th.IntegerType,
-                    #            description="Indexes into a result set.",
-                    #        ),
-                    #        th.Property(
-                    #            "$top",
-                    #            th.IntegerType,
-                    #            description="Sets the page size of results.",
-                    #        ),
-                    #    ),
-                    # ),
                 )
             ),
             description="Custom configuration for streams.",
