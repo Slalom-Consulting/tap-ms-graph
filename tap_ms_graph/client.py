@@ -70,7 +70,7 @@ class MSGraphStream(RESTStream):
     def get_new_paginator(self) -> MSGraphPaginator:
         return MSGraphPaginator()
 
-    def _get_strem_config(self) -> dict:
+    def _get_stream_config(self) -> dict:
         """Get parameters set in config."""
         config: dict = {}
 
@@ -86,7 +86,7 @@ class MSGraphStream(RESTStream):
         return stream_config
 
     def _get_stream_params(self) -> dict:
-        stream_params = self._get_strem_config().get("parameters", "")
+        stream_params = self._get_stream_config().get("parameters", "")
         return {qry[0]: qry[1] for qry in parse_qsl(stream_params.lstrip("?"))}
 
     def get_url_params(
@@ -103,8 +103,8 @@ class MSGraphStream(RESTStream):
         # Ensure that primary keys are included in $select parameter
         select_param = params.get("$select", [])
         if select_param:
-            # if isinstance(select_param, str):
-            #    select_param = select_param.split(',')
+            if isinstance(select_param, str):
+               select_param = select_param.split(',')
 
             missing_primary_keys = [
                 k for k in self.primary_keys if k not in select_param
