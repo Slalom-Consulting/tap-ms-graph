@@ -8,16 +8,16 @@
       }
     },
     "displayName": {
-      "type": "string"
+      "type": ["string", "null"]
     },
     "givenName": {
-      "type": "string"
+      "type": ["string", "null"]
     },
     "jobTitle": {
       "type": "null"
     },
     "mail": {
-      "type": "string"
+      "type": ["string", "null"]
     },
     "mobilePhone": {
       "type": "null"
@@ -29,16 +29,16 @@
       "type": "null"
     },
     "surname": {
-      "type": "string"
+      "type": ["string", "null"]
     },
     "userPrincipalName": {
-      "type": "string"
+      "type": ["string", "null"]
     },
     "id": {
-      "type": "string"
+      "type": ["string", "null"]
     },
     "userType": {
-      "type": "string"
+      "type": ["string", "null"]
     },
     "assignedLicenses": {
       "type": "array",
@@ -48,11 +48,11 @@
           "disabledPlans": {
             "type": "array",
             "items": {
-              "type": "string"
+              "type": ["string", "null"]
             }
           },
           "skuId": {
-            "type": "string"
+            "type": ["string", "null"]
           }
         }
       }
@@ -63,16 +63,16 @@
         "type": "object",
         "properties": {
           "assignedDateTime": {
-            "type": "string"
+            "type": ["string", "null"]
           },
           "capabilityStatus": {
-            "type": "string"
+            "type": ["string", "null"]
           },
           "service": {
-            "type": "string"
+            "type": ["string", "null"]
           },
           "servicePlanId": {
-            "type": "string"
+            "type": ["string", "null"]
           }
         }
       }
@@ -83,25 +83,25 @@
         "type": "object",
         "properties": {
           "skuId": {
-            "type": "string"
+            "type": ["string", "null"]
           },
           "disabledPlans": {
             "type": "array",
             "items": {
-              "type": "string"
+              "type": ["string", "null"]
             }
           },
           "assignedByGroup": {
-            "type": "string"
+            "type": ["string", "null"]
           },
           "state": {
-            "type": "string"
+            "type": ["string", "null"]
           },
           "error": {
-            "type": "string"
+            "type": ["string", "null"]
           },
           "lastUpdatedDateTime": {
-            "type": "string"
+            "type": ["string", "null"]
           }
         }
       }
