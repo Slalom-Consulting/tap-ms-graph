@@ -115,11 +115,6 @@ class MSGraphStream(RESTStream):
 
             params["$select"] = ",".join(select_param)
 
-        # Convert orderby to string
-        orderby_param = params.get("$orderby", [])
-        if orderby_param:
-            params["$orderby"] = ",".join(orderby_param)
-
         return params
 
     def prepare_request(
