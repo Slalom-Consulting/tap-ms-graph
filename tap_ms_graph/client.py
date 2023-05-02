@@ -101,19 +101,18 @@ class MSGraphStream(RESTStream):
                 params["$count"] = True
 
         # Ensure that primary keys are included in $select parameter
-        select_param = params.get("$select", [])
+        select_param = params.get("$select", "")
         if select_param:
-            if isinstance(select_param, str):
-               select_param = select_param.split(',')
+            select_params = select_param.split(',')
 
             missing_primary_keys = [
-                k for k in self.primary_keys if k not in select_param
+                k for k in self.primary_keys if k not in select_params
             ]
 
             if missing_primary_keys:
-                select_param.extend(missing_primary_keys)
+                select_params.extend(missing_primary_keys)
 
-            params["$select"] = ",".join(select_param)
+            params["$select"] = ",".join(select_params)
 
         return params
 
