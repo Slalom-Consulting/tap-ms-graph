@@ -7,6 +7,7 @@ from typing import Any, Dict, Generator, Iterable, Optional, Union
 from urllib.parse import urljoin, parse_qsl
 
 import requests
+from memoization import cached
 from singer_sdk.streams import RESTStream
 
 from tap_ms_graph.auth import MSGraphAuthenticator
@@ -40,6 +41,7 @@ class MSGraphStream(RESTStream):
         return urljoin(base, self.api_version)
 
     @property
+    @cached  # type: ignore[override]
     def authenticator(self) -> MSGraphAuthenticator:
         return MSGraphAuthenticator(self)
 
