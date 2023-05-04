@@ -1,14 +1,16 @@
 import json
 import re
+from typing import Dict
 
+import jsonref
 import lxml.etree as ET
 import requests
-import jsonref
 
 API_VERSION = "v1.0"
 
 xml_link = f"https://graph.microsoft.com/{API_VERSION}/$metadata"
 xsl_link = "https://raw.githubusercontent.com/oasis-tcs/odata-json-schema/main/tools/V4-CSDL-to-JSONSchema.xsl"
+odata_meta_schema = "https://raw.githubusercontent.com/oasis-tcs/odata-json-schema/main/tools/odata-meta-schema.json"
 
 
 def get_dom_doc() -> dict:
@@ -20,78 +22,68 @@ def get_dom_doc() -> dict:
     transform = ET.XSLT(xslt)
     newdom = transform(dom)
     dom_json = str(newdom)
-    return json.loads(dom_json)
 
-
-def get_refs(dom_doc, odata_context:str):
-    val = odata_context.lstrip(f"https://graph.microsoft.com/{API_VERSION}/")
-
-    contexts = dom_doc.get('anyOf')
-    for context in contexts:
-        properties = context.get("properties")
-
-        pattern = re.compile(properties.get("@odata.context").get("pattern"))
-        if pattern.match(val):
-            print(f'Using schema "{context.get("description")}"')
-            
-            refs = context.get("allOf")
-
-            val = properties.get("value")
-            if val:
-                refs = [val.get("items")]
-
-            return [ref.get('$ref') for ref in refs]
-        # return [ref.get('$ref').lstrip("#/definitions/") for ref in refs]
-                
-
-def get_schema(dom_doc, odata_context:str):
-    definitions = json.dumps({"definitions": dom_doc.get("definitions")})
-    fixed = definitions.replace(
+    dom_json_fixed = dom_json.replace(
         "https://oasis-tcs.github.io/odata-json-schema/tools/odata-meta-schema.json",
-        "https://raw.githubusercontent.com/oasis-tcs/odata-json-schema/main/tools/odata-meta-schema.json"
+        odata_meta_schema
     )
 
-    full_schema = jsonref.loads(fixed)
+    return json.loads(dom_json_fixed)
 
-    ref = get_refs(dom_doc, odata_context)[0]
-    schema = full_schema.get("definitions").get(ref)
+
+def get_refs(dom_doc:dict, odata_context:str) -> list:
+    base_url = f"https://graph.microsoft.com/{API_VERSION}/"
+    val = odata_context.lstrip(base_url)
+
+    contexts:Dict[dict] = dom_doc.get('anyOf', {})
+    for c in contexts:
+        properties = c.get("properties", {})
+
+        pattern = re.compile(properties.get("@odata.context", {}).get("pattern", ""))
+        if pattern.match(val):
+            context = c
+            break
+
+    if not context:
+        return
+
+    description = context.get("description", "")
+    print(f'Using schema "{description}"')
+
+    refs_doc:Dict[dict] = context.get("allOf", {})
+
+    value = properties.get("value", {})
+    if value:
+        refs_doc = [value.get("items")]
+
+    return [ref.get('$ref', "") for ref in refs_doc]
+                
+
+def get_schema(dom_doc:dict, odata_context:str):
+    #TODO: flatten allOf, anyOf, oneOf from dom_doc.get("definitions")
+    #TODO: only get first level
+    context_refs = get_refs(dom_doc, odata_context)
+    context_ref = context_refs[0]
+
+    definitions = json.dumps({
+        "context": {"$ref": context_ref},
+        "definitions": dom_doc.get("definitions")
+    })
+
+    full_schema = jsonref.loads(definitions)
+    context_schema = full_schema.get("context", {})
 
     return {
-        "type": schema.get("type"),
-        "properties": schema.get("properties")
+        "type": context_schema.get("type"),
+        "properties": context_schema.get("properties")
     }
 
 
+
 dom_doc = get_dom_doc()
 odata_context = "https://graph.microsoft.com/v1.0/$metadata#users"
-
-
 schema = get_schema(dom_doc, odata_context)
 
 with open("test.json", "w") as fp:
-    json.dump(get_schema(dom_doc, odata_context), fp, indent=2)
-    #json.dump(test3, fp, indent=2)
-
-
-
-dom_doc = get_dom_doc()
-
-
-odata_context = "https://graph.microsoft.com/v1.0/$metadata#users"
-test = get_refs(dom_doc, odata_context)
-
-definitions = json.dumps({"definitions": dom_doc.get("definitions")})
-fixed = definitions.replace("https://oasis-tcs.github.io/odata-json-schema/tools/odata-meta-schema.json", "https://raw.githubusercontent.com/oasis-tcs/odata-json-schema/main/tools/odata-meta-schema.json")
-
-test2 = jsonref.loads(fixed)
-
-test3 = test2.get("definitions").get(test[0])
-
-test3.get("properties").keys()
-
-
-#with open("t.json", 'w') as f:
-#    json.dump(definitions, f, indent=4)
-
-
+    json.dump(schema, fp, indent=2)
 
