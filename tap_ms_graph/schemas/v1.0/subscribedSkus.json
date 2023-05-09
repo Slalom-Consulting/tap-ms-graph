@@ -1,57 +1,49 @@
 {
   "type": "object",
   "properties": {
+    "appliesTo": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
     "capabilityStatus": {
-      "type": ["string", "null"]
+      "type": [
+        "string",
+        "null"
+      ]
     },
     "consumedUnits": {
-      "type": ["integer", "null"]
-    },
-    "id": {
-      "type": ["string", "null"]
+      "type": [
+        "integer",
+        "null"
+      ],
+      "format": "int32"
     },
     "prepaidUnits": {
-      "type": "object",
-      "properties": {
-        "enabled": {
-          "type": ["integer", "null"]
-        },
-        "suspended": {
-          "type": ["integer", "null"]
-        },
-        "warning": {
-          "type": ["integer", "null"]
-        }
-      }
+      "type": [
+        "string",
+        "null"
+      ]
     },
     "servicePlans": {
-      "type": "array",
-      "items": {
-        "type": "object",
-        "properties": {
-          "servicePlanId": {
-            "type": ["string", "null"]
-          },
-          "servicePlanName": {
-            "type": ["string", "null"]
-          },
-          "provisioningStatus": {
-            "type": ["string", "null"]
-          },
-          "appliesTo": {
-            "type": ["string", "null"]
-          }
-        }
-      }
+      "type": [
+        "string",
+        "null"
+      ]
     },
     "skuId": {
-      "type": ["string", "null"]
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "uuid"
     },
     "skuPartNumber": {
-      "type": ["string", "null"]
-    },
-    "appliesTo": {
-      "type": ["string", "null"]
+      "type": [
+        "string",
+        "null"
+      ]
     }
   }
 }
