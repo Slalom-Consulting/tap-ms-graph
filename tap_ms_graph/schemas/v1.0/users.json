@@ -1,110 +1,726 @@
 {
   "type": "object",
   "properties": {
-    "businessPhones": {
-      "type": "array",
-      "items": {
-        "items": {}
-      }
+    "signInActivity": {
+      "type": [
+        "string",
+        "null"
+      ]
     },
-    "displayName": {
-      "type": ["string", "null"]
+    "accountEnabled": {
+      "type": [
+        "boolean",
+        "null"
+      ]
     },
-    "givenName": {
-      "type": ["string", "null"]
-    },
-    "jobTitle": {
-      "type": "null"
-    },
-    "mail": {
-      "type": ["string", "null"]
-    },
-    "mobilePhone": {
-      "type": "null"
-    },
-    "officeLocation": {
-      "type": "null"
-    },
-    "preferredLanguage": {
-      "type": "null"
-    },
-    "surname": {
-      "type": ["string", "null"]
-    },
-    "userPrincipalName": {
-      "type": ["string", "null"]
-    },
-    "id": {
-      "type": ["string", "null"]
-    },
-    "userType": {
-      "type": ["string", "null"]
+    "ageGroup": {
+      "type": [
+        "string",
+        "null"
+      ]
     },
     "assignedLicenses": {
-      "type": "array",
-      "items": {
-        "type": "object",
-        "properties": {
-          "disabledPlans": {
-            "type": "array",
-            "items": {
-              "type": ["string", "null"]
-            }
-          },
-          "skuId": {
-            "type": ["string", "null"]
-          }
-        }
-      }
+      "type": [
+        "string",
+        "null"
+      ]
     },
     "assignedPlans": {
-      "type": "array",
-      "items": {
-        "type": "object",
-        "properties": {
-          "assignedDateTime": {
-            "type": ["string", "null"]
-          },
-          "capabilityStatus": {
-            "type": ["string", "null"]
-          },
-          "service": {
-            "type": ["string", "null"]
-          },
-          "servicePlanId": {
-            "type": ["string", "null"]
-          }
-        }
-      }
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "authorizationInfo": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "businessPhones": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "city": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "companyName": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "consentProvidedForMinor": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "country": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "createdDateTime": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "date-time"
+    },
+    "creationType": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "department": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "displayName": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "employeeHireDate": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "date-time"
+    },
+    "employeeId": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "employeeLeaveDateTime": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "date-time"
+    },
+    "employeeOrgData": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "employeeType": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "externalUserState": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "externalUserStateChangeDateTime": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "date-time"
+    },
+    "faxNumber": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "givenName": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "identities": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "imAddresses": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "isResourceAccount": {
+      "type": [
+        "boolean",
+        "null"
+      ]
+    },
+    "jobTitle": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "lastPasswordChangeDateTime": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "date-time"
+    },
+    "legalAgeGroupClassification": {
+      "type": [
+        "string",
+        "null"
+      ]
     },
     "licenseAssignmentStates": {
-      "type": "array",
-      "items": {
-        "type": "object",
-        "properties": {
-          "skuId": {
-            "type": ["string", "null"]
-          },
-          "disabledPlans": {
-            "type": "array",
-            "items": {
-              "type": ["string", "null"]
-            }
-          },
-          "assignedByGroup": {
-            "type": ["string", "null"]
-          },
-          "state": {
-            "type": ["string", "null"]
-          },
-          "error": {
-            "type": ["string", "null"]
-          },
-          "lastUpdatedDateTime": {
-            "type": ["string", "null"]
-          }
-        }
-      }
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "mail": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "mailNickname": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "mobilePhone": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "officeLocation": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "onPremisesDistinguishedName": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "onPremisesDomainName": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "onPremisesExtensionAttributes": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "onPremisesImmutableId": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "onPremisesLastSyncDateTime": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "date-time"
+    },
+    "onPremisesProvisioningErrors": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "onPremisesSamAccountName": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "onPremisesSecurityIdentifier": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "onPremisesSyncEnabled": {
+      "type": [
+        "boolean",
+        "null"
+      ]
+    },
+    "onPremisesUserPrincipalName": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "otherMails": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "passwordPolicies": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "passwordProfile": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "postalCode": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "preferredDataLocation": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "preferredLanguage": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "provisionedPlans": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "proxyAddresses": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "securityIdentifier": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "showInAddressList": {
+      "type": [
+        "boolean",
+        "null"
+      ]
+    },
+    "signInSessionsValidFromDateTime": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "date-time"
+    },
+    "state": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "streetAddress": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "surname": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "usageLocation": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "userPrincipalName": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "userType": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "mailboxSettings": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "deviceEnrollmentLimit": {
+      "type": "integer",
+      "format": "int32"
+    },
+    "aboutMe": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "birthday": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "hireDate": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "interests": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "mySite": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "pastProjects": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "preferredName": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "responsibilities": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "schools": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "skills": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "appRoleAssignments": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "createdObjects": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "directReports": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "licenseDetails": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "manager": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "memberOf": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "oauth2PermissionGrants": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "ownedDevices": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "ownedObjects": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "registeredDevices": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "scopedRoleMemberOf": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "transitiveMemberOf": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "calendar": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "calendarGroups": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "calendars": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "calendarView": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "contactFolders": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "contacts": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "events": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "inferenceClassification": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "mailFolders": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "messages": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "outlook": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "people": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "drive": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "drives": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "followedSites": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "extensions": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "agreementAcceptances": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "managedDevices": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "managedAppRegistrations": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "deviceManagementTroubleshootingEvents": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "planner": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "insights": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "settings": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "onenote": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "photo": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "photos": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "activities": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "onlineMeetings": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "presence": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "authentication": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "chats": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "joinedTeams": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "teamwork": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "todo": {
+      "type": [
+        "string",
+        "null"
+      ]
     }
   }
 }
