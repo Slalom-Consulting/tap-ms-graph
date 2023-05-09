@@ -5,6 +5,7 @@ from typing import Dict
 import jsonref
 import lxml.etree as ET
 import requests
+from memoization import cached
 
 API_VERSION = "v1.0"
 
@@ -13,6 +14,7 @@ xsl_link = "https://raw.githubusercontent.com/oasis-tcs/odata-json-schema/main/t
 odata_meta_schema = "https://raw.githubusercontent.com/oasis-tcs/odata-json-schema/main/tools/odata-meta-schema.json"
 
 
+@cached
 def get_dom_doc() -> dict:
     xml_file = requests.get(xml_link).content
     xsl_file = requests.get(xsl_link).content
@@ -59,9 +61,7 @@ def get_refs(dom_doc:dict, odata_context:str) -> list:
     return [ref.get('$ref', "") for ref in refs_doc]
                 
 
-def get_schema(dom_doc:dict, odata_context:str):
-    #TODO: flatten allOf, anyOf, oneOf from dom_doc.get("definitions")
-    #TODO: only get first level
+def get_schema(dom_doc:dict, odata_context:str) -> dict:
     context_refs = get_refs(dom_doc, odata_context)
     context_ref = context_refs[0]
 
@@ -79,11 +79,39 @@ def get_schema(dom_doc:dict, odata_context:str):
     }
 
 
+def convert_complex_types_to_string(schema:dict):
+    of_keys = ("allOf", "anyOf", "oneOf")
+    replacement = {"type": ["string", "null"]}
 
-dom_doc = get_dom_doc()
-odata_context = "https://graph.microsoft.com/v1.0/$metadata#users"
-schema = get_schema(dom_doc, odata_context)
+    properties = schema.get("properties", {})
+    new_properties = properties.copy()
 
-with open("test.json", "w") as fp:
-    json.dump(schema, fp, indent=2)
+    for field_name, field_val in properties.items():
+        field_keys = properties.get(field_name, {}).keys()
 
+        has_of_list = any(k for k in field_keys if k in of_keys)
+        has_structure = field_val.get("type", {}) in ("array", "object")
+
+        if has_structure or has_of_list:
+            new_properties[field_name] = replacement
+
+    return {
+        "type": "object",
+        "properties": new_properties
+    }
+
+
+def save_schema_doc(odata_context:str):
+    dom_doc = get_dom_doc()
+    schema = get_schema(dom_doc, odata_context)
+    clean_schema = convert_complex_types_to_string(schema)
+
+    stream_name = odata_context.split("#")[-1]
+    schema_fp = f"tap_ms_graph/schemas/{API_VERSION}/{stream_name}.json"
+
+    with open(schema_fp, "w") as fp:
+        json.dump(clean_schema, fp, indent=2)
+
+
+odata_context = "https://graph.microsoft.com/v1.0/$metadata#subscribedSkus"
+save_schema_doc(odata_context)
