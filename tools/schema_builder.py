@@ -27,17 +27,17 @@ def get_dom_doc() -> dict:
 
     dom_json_fixed = dom_json.replace(
         "https://oasis-tcs.github.io/odata-json-schema/tools/odata-meta-schema.json",
-        odata_meta_schema
+        odata_meta_schema,
     )
 
     return json.loads(dom_json_fixed)
 
 
-def get_refs(dom_doc:dict, odata_context:str) -> list:
+def get_refs(dom_doc: dict, odata_context: str) -> list:
     base_url = f"https://graph.microsoft.com/{API_VERSION}/"
     val = odata_context.lstrip(base_url)
 
-    contexts:Dict[dict] = dom_doc.get('anyOf', {})
+    contexts: Dict[dict] = dom_doc.get("anyOf", {})
     for c in contexts:
         properties = c.get("properties", {})
 
@@ -52,34 +52,33 @@ def get_refs(dom_doc:dict, odata_context:str) -> list:
     description = context.get("description", "")
     print(f'Using schema "{description}"')
 
-    refs_doc:Dict[dict] = context.get("allOf", {})
+    refs_doc: Dict[dict] = context.get("allOf", {})
 
     value = properties.get("value", {})
     if value:
         refs_doc = [value.get("items")]
 
-    return [ref.get('$ref', "") for ref in refs_doc]
-                
+    return [ref.get("$ref", "") for ref in refs_doc]
 
-def get_schema(dom_doc:dict, odata_context:str) -> dict:
+
+def get_schema(dom_doc: dict, odata_context: str) -> dict:
     context_refs = get_refs(dom_doc, odata_context)
     context_ref = context_refs[0]
 
-    definitions = json.dumps({
-        "context": {"$ref": context_ref},
-        "definitions": dom_doc.get("definitions")
-    })
+    definitions = json.dumps(
+        {"context": {"$ref": context_ref}, "definitions": dom_doc.get("definitions")}
+    )
 
     full_schema = jsonref.loads(definitions)
     context_schema = full_schema.get("context", {})
 
     return {
         "type": context_schema.get("type"),
-        "properties": context_schema.get("properties")
+        "properties": context_schema.get("properties"),
     }
 
 
-def convert_complex_types_to_string(schema:dict):
+def convert_complex_types_to_string(schema: dict):
     of_keys = ("allOf", "anyOf", "oneOf")
     replacement = {"type": ["string", "null"]}
 
@@ -95,13 +94,10 @@ def convert_complex_types_to_string(schema:dict):
         if has_structure or has_of_list:
             new_properties[field_name] = replacement
 
-    return {
-        "type": "object",
-        "properties": new_properties
-    }
+    return {"type": "object", "properties": new_properties}
 
 
-def save_schema_doc(odata_context:str):
+def save_schema_doc(odata_context: str):
     dom_doc = get_dom_doc()
     schema = get_schema(dom_doc, odata_context)
     clean_schema = convert_complex_types_to_string(schema)

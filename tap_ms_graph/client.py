@@ -4,7 +4,7 @@ import json
 import uuid
 from pathlib import Path
 from typing import Any, Dict, Generator, Iterable, Optional, Union
-from urllib.parse import urljoin, parse_qsl
+from urllib.parse import parse_qsl, urljoin
 
 import requests
 from memoization import cached
@@ -105,7 +105,7 @@ class MSGraphStream(RESTStream):
         # Ensure that primary keys are included in $select parameter
         select_param = params.get("$select", "")
         if select_param:
-            select_params = select_param.split(',')
+            select_params = select_param.split(",")
 
             missing_primary_keys = [
                 k for k in self.primary_keys if k not in select_params
