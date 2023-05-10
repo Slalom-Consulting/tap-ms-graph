@@ -29,11 +29,11 @@ class MSGraphStream(RESTStream):
 
     @property
     def api_version(self) -> str:
-        """Get API version"""
+        """Get API version."""
         return str(self.config.get("api_version", ""))
 
     @property
-    def schema_filepath(self) -> str:
+    def schema_filepath(self) -> str:  # type: ignore[override]
         api_path = SCHEMAS_DIR.joinpath(self.api_version)
         return str(api_path.joinpath(self.schema_filename))
 

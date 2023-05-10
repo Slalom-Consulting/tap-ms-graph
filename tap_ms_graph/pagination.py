@@ -1,3 +1,5 @@
+"""Pagination classes for tap-ms-graph."""
+
 from typing import Any, Optional
 
 from requests import Response

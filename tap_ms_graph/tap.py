@@ -22,20 +22,23 @@ class TapMSGraph(Tap):
             "tenant",
             th.StringType,
             required=True,
-            description="The directory tenant to request permission from. The value can be in GUID or a friendly name format.",
+            description="The directory tenant to request permission from. \
+                The value can be in GUID or a friendly name format.",
         ),
         th.Property(
             "client_id",
             th.StringType,
             required=True,
-            description="The application ID that the Azure app registration portal assigned to the registered app.",
+            description="The application ID that the Azure app registration \
+                portal assigned to the registered app.",
         ),
         th.Property(
             "client_secret",
             th.StringType,
             required=True,
             secret=True,
-            description="The client secret generated for the app in the app registration portal.",
+            description="The client secret generated for the app \
+                in the app registration portal.",
         ),
         th.Property(
             "stream_config",
@@ -50,7 +53,8 @@ class TapMSGraph(Tap):
                     th.Property(
                         "parameters",
                         th.StringType,
-                        description="URL formatted parameters string to be used for stream.",
+                        description="URL formatted parameters string to \
+                            be used for stream.",
                     ),
                     # th.Property(
                     #    "primary_keys",
@@ -65,12 +69,14 @@ class TapMSGraph(Tap):
                     # th.Property(
                     #    "schema_discovery",
                     #    th.BooleanType,
-                    #    description="Override the default schema and use discovery mode.",
+                    #    description="Override the default schema \
+                    # and use discovery mode.",
                     # ),
                     # th.Property(
                     #    "schema",
                     #    th.StringType,
-                    #    description="Override the default schema with a custom JSONSchema string.",
+                    #    description="Override the default schema \
+                    # with a custom JSONSchema string.",
                     # ),
                 )
             ),
@@ -87,12 +93,14 @@ class TapMSGraph(Tap):
         th.Property(
             "auth_url",
             th.StringType,
-            description="Override the Azure AD authentication base URL. Required if using a national cloud.",
+            description="Override the Azure AD authentication base URL. \
+                Required if using a national cloud.",
         ),
         th.Property(
             "api_url",
             th.StringType,
-            description="Override the Graph API service base URL. Required if using a national cloud.",
+            description="Override the Graph API service base URL. \
+                Required if using a national cloud.",
         ),
     ).to_dict()
 
