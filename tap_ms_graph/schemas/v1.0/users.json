@@ -721,6 +721,16 @@
         "string",
         "null"
       ]
+    },
+    "deletedDateTime": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "date-time"
+    },
+    "id": {
+      "type": "string"
     }
   }
 }
