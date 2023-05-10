@@ -58,21 +58,18 @@ tap-ms-graph --about
 ```
 
 ### Custom Stream Configuration
-Many streams support [advanced query capabilities](https://learn.microsoft.com/en-us/graph/aad-advanced-queries?tabs=http) (eg. `$count`, `$select`, `$filter`, `$search`, `$orderby`, ...) and can be added to the tap configuration json:
+Many streams support [advanced query capabilities](https://learn.microsoft.com/en-us/graph/aad-advanced-queries?tabs=http) (eg. `$count`, `$select`, `$filter`, `$search`, `$orderby`, ...) and can be added to the tap configuration stream parameters:
 
 ```json
-"stream_config": [
-    {
-        "stream": "{stream_name}",
-        "params": [
-            {"param": "{parameter_name}", "value": "{parameter_value}"},
-            ...
-        ]
-    },
-    ...
-]
+{
+    "stream_config": [
+        {
+            "stream": "STREAM_NAME",
+            "parameters": "URL_QUERY_STRING"
+        }
+    ]
+}
 ```
-
 
 ### Configure using environment variables
 
