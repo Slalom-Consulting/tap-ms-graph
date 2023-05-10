@@ -30,7 +30,7 @@ class MSGraphStream(RESTStream):
     @property
     def api_version(self) -> str:
         """Get API version"""
-        return str(self.config.get("api_version"))
+        return str(self.config.get("api_version", ""))
 
     @property
     def schema_filepath(self) -> str:
@@ -53,7 +53,7 @@ class MSGraphStream(RESTStream):
 
         # Set ConsistencyLevel for count operations
         params = self.get_url_params(None, None) or {}
-        if str(params.get("$count")).lower() == "true":
+        if str(params.get("$count", "")).lower() == "true":
             headers["ConsistencyLevel"] = "eventual"
 
         # Configure request logging
@@ -83,7 +83,7 @@ class MSGraphStream(RESTStream):
             return config
 
         config_list = [
-            conf for conf in stream_configs if conf.get("stream") == self.name
+            conf for conf in stream_configs if conf.get("stream", "") == self.name
         ] or [None]
         config_dict = config_list[-1] or {}
         stream_config = {k: v for k, v in config_dict.items() if k != "stream"}
@@ -99,7 +99,7 @@ class MSGraphStream(RESTStream):
         params = self._get_stream_params()
 
         # Ensure that $count is True when used in $filter parameter
-        filter_params = params.get("$filter", str)
+        filter_params = params.get("$filter", "")
         if filter_params:
             if "$count" in filter_params:
                 params["$count"] = True
