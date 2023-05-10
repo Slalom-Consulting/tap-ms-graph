@@ -130,7 +130,7 @@ def get_schema(odata_context: str):
 
 def save_schema(odata_context: str):
     schema = get_schema(odata_context)
-    stream_name = odata_context.split("#")[-1]
+    stream_name = odata_context.lstrip(f"{xml_link}#").split("(")[0]
     schema_fp = f"tap_ms_graph/schemas/{API_VERSION}/{stream_name}.json"
 
     with open(schema_fp, "w") as fp:
