@@ -61,7 +61,30 @@ def get_refs(dom_doc: dict, odata_context: str) -> list:
     return [ref.get("$ref", "") for ref in refs_doc]
 
 
-def get_schema(dom_doc: dict, odata_context: str) -> dict:
+def fix_schema_inheritance(schema: dict):
+    of_keys = ("allOf", "anyOf", "oneOf")
+
+    for k in of_keys:
+        insert_items = schema.pop(k, [])
+        if insert_items:
+            for elem in insert_items:
+                properties = elem.get("properties", {})
+                if properties:
+                    schema["properties"] = {**schema["properties"], **properties}
+
+                for of_key in of_keys:
+                    insert_more_items = elem.get(of_key, [])
+                    for item in insert_more_items:
+                        more_properties = item.get("properties", {})
+                        schema["properties"] = {
+                            **schema["properties"],
+                            **more_properties,
+                        }
+
+    return schema
+
+
+def get_ref_schema(dom_doc: dict, odata_context: str) -> dict:
     context_refs = get_refs(dom_doc, odata_context)
     context_ref = context_refs[0]
 
@@ -72,10 +95,7 @@ def get_schema(dom_doc: dict, odata_context: str) -> dict:
     full_schema = jsonref.loads(definitions)
     context_schema = full_schema.get("context", {})
 
-    return {
-        "type": context_schema.get("type"),
-        "properties": context_schema.get("properties"),
-    }
+    return fix_schema_inheritance(context_schema)
 
 
 def convert_complex_types_to_string(schema: dict):
@@ -97,17 +117,25 @@ def convert_complex_types_to_string(schema: dict):
     return {"type": "object", "properties": new_properties}
 
 
-def save_schema_doc(odata_context: str):
+def get_schema(odata_context: str):
     dom_doc = get_dom_doc()
-    schema = get_schema(dom_doc, odata_context)
-    clean_schema = convert_complex_types_to_string(schema)
+    full_schema = get_ref_schema(dom_doc, odata_context)
+    schema = convert_complex_types_to_string(full_schema)
 
+    sorted_properties = sorted(schema.get("properties", {}).items())
+    schema["properties"] = dict(sorted_properties)
+
+    return schema
+
+
+def save_schema(odata_context: str):
+    schema = get_schema(odata_context)
     stream_name = odata_context.split("#")[-1]
     schema_fp = f"tap_ms_graph/schemas/{API_VERSION}/{stream_name}.json"
 
     with open(schema_fp, "w") as fp:
-        json.dump(clean_schema, fp, indent=2)
+        json.dump(schema, fp, indent=2)
 
 
-odata_context = "https://graph.microsoft.com/v1.0/$metadata#subscribedSkus"
-save_schema_doc(odata_context)
+# odata_context = "https://graph.microsoft.com/v1.0/$metadata#users"
+# save_schema(odata_context)
