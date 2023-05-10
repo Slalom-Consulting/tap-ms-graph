@@ -1,7 +1,7 @@
 {
   "type": "object",
   "properties": {
-    "signInActivity": {
+    "aboutMe": {
       "type": [
         "string",
         "null"
@@ -13,7 +13,25 @@
         "null"
       ]
     },
+    "activities": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
     "ageGroup": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "agreementAcceptances": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "appRoleAssignments": {
       "type": [
         "string",
         "null"
@@ -31,13 +49,53 @@
         "null"
       ]
     },
+    "authentication": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
     "authorizationInfo": {
       "type": [
         "string",
         "null"
       ]
     },
+    "birthday": {
+      "type": "string",
+      "format": "date-time"
+    },
     "businessPhones": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "calendar": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "calendarGroups": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "calendarView": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "calendars": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "chats": {
       "type": [
         "string",
         "null"
@@ -61,6 +119,18 @@
         "null"
       ]
     },
+    "contactFolders": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "contacts": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
     "country": {
       "type": [
         "string",
@@ -74,11 +144,24 @@
       ],
       "format": "date-time"
     },
+    "createdObjects": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
     "creationType": {
       "type": [
         "string",
         "null"
       ]
+    },
+    "deletedDateTime": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "date-time"
     },
     "department": {
       "type": [
@@ -86,7 +169,35 @@
         "null"
       ]
     },
+    "deviceEnrollmentLimit": {
+      "type": "integer",
+      "format": "int32"
+    },
+    "deviceManagementTroubleshootingEvents": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "directReports": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
     "displayName": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "drive": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "drives": {
       "type": [
         "string",
         "null"
@@ -124,6 +235,18 @@
         "null"
       ]
     },
+    "events": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "extensions": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
     "externalUserState": {
       "type": [
         "string",
@@ -143,11 +266,24 @@
         "null"
       ]
     },
+    "followedSites": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
     "givenName": {
       "type": [
         "string",
         "null"
       ]
+    },
+    "hireDate": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "id": {
+      "type": "string"
     },
     "identities": {
       "type": [
@@ -161,6 +297,24 @@
         "null"
       ]
     },
+    "inferenceClassification": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "insights": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "interests": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
     "isResourceAccount": {
       "type": [
         "boolean",
@@ -168,6 +322,12 @@
       ]
     },
     "jobTitle": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "joinedTeams": {
       "type": [
         "string",
         "null"
@@ -192,7 +352,19 @@
         "null"
       ]
     },
+    "licenseDetails": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
     "mail": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "mailFolders": {
       "type": [
         "string",
         "null"
@@ -204,7 +376,55 @@
         "null"
       ]
     },
+    "mailboxSettings": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "managedAppRegistrations": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "managedDevices": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "manager": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "memberOf": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "messages": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
     "mobilePhone": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "mySite": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "oauth2PermissionGrants": {
       "type": [
         "string",
         "null"
@@ -277,7 +497,37 @@
         "null"
       ]
     },
+    "onenote": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "onlineMeetings": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
     "otherMails": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "outlook": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "ownedDevices": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "ownedObjects": {
       "type": [
         "string",
         "null"
@@ -290,6 +540,36 @@
       ]
     },
     "passwordProfile": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "pastProjects": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "people": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "photo": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "photos": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "planner": {
       "type": [
         "string",
         "null"
@@ -313,6 +593,18 @@
         "null"
       ]
     },
+    "preferredName": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "presence": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
     "provisionedPlans": {
       "type": [
         "string",
@@ -325,7 +617,37 @@
         "null"
       ]
     },
+    "registeredDevices": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "responsibilities": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "schools": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "scopedRoleMemberOf": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
     "securityIdentifier": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "settings": {
       "type": [
         "string",
         "null"
@@ -337,12 +659,24 @@
         "null"
       ]
     },
+    "signInActivity": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
     "signInSessionsValidFromDateTime": {
       "type": [
         "string",
         "null"
       ],
       "format": "date-time"
+    },
+    "skills": {
+      "type": [
+        "string",
+        "null"
+      ]
     },
     "state": {
       "type": [
@@ -357,6 +691,24 @@
       ]
     },
     "surname": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "teamwork": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "todo": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "transitiveMemberOf": {
       "type": [
         "string",
         "null"
@@ -379,358 +731,6 @@
         "string",
         "null"
       ]
-    },
-    "mailboxSettings": {
-      "type": [
-        "string",
-        "null"
-      ]
-    },
-    "deviceEnrollmentLimit": {
-      "type": "integer",
-      "format": "int32"
-    },
-    "aboutMe": {
-      "type": [
-        "string",
-        "null"
-      ]
-    },
-    "birthday": {
-      "type": "string",
-      "format": "date-time"
-    },
-    "hireDate": {
-      "type": "string",
-      "format": "date-time"
-    },
-    "interests": {
-      "type": [
-        "string",
-        "null"
-      ]
-    },
-    "mySite": {
-      "type": [
-        "string",
-        "null"
-      ]
-    },
-    "pastProjects": {
-      "type": [
-        "string",
-        "null"
-      ]
-    },
-    "preferredName": {
-      "type": [
-        "string",
-        "null"
-      ]
-    },
-    "responsibilities": {
-      "type": [
-        "string",
-        "null"
-      ]
-    },
-    "schools": {
-      "type": [
-        "string",
-        "null"
-      ]
-    },
-    "skills": {
-      "type": [
-        "string",
-        "null"
-      ]
-    },
-    "appRoleAssignments": {
-      "type": [
-        "string",
-        "null"
-      ]
-    },
-    "createdObjects": {
-      "type": [
-        "string",
-        "null"
-      ]
-    },
-    "directReports": {
-      "type": [
-        "string",
-        "null"
-      ]
-    },
-    "licenseDetails": {
-      "type": [
-        "string",
-        "null"
-      ]
-    },
-    "manager": {
-      "type": [
-        "string",
-        "null"
-      ]
-    },
-    "memberOf": {
-      "type": [
-        "string",
-        "null"
-      ]
-    },
-    "oauth2PermissionGrants": {
-      "type": [
-        "string",
-        "null"
-      ]
-    },
-    "ownedDevices": {
-      "type": [
-        "string",
-        "null"
-      ]
-    },
-    "ownedObjects": {
-      "type": [
-        "string",
-        "null"
-      ]
-    },
-    "registeredDevices": {
-      "type": [
-        "string",
-        "null"
-      ]
-    },
-    "scopedRoleMemberOf": {
-      "type": [
-        "string",
-        "null"
-      ]
-    },
-    "transitiveMemberOf": {
-      "type": [
-        "string",
-        "null"
-      ]
-    },
-    "calendar": {
-      "type": [
-        "string",
-        "null"
-      ]
-    },
-    "calendarGroups": {
-      "type": [
-        "string",
-        "null"
-      ]
-    },
-    "calendars": {
-      "type": [
-        "string",
-        "null"
-      ]
-    },
-    "calendarView": {
-      "type": [
-        "string",
-        "null"
-      ]
-    },
-    "contactFolders": {
-      "type": [
-        "string",
-        "null"
-      ]
-    },
-    "contacts": {
-      "type": [
-        "string",
-        "null"
-      ]
-    },
-    "events": {
-      "type": [
-        "string",
-        "null"
-      ]
-    },
-    "inferenceClassification": {
-      "type": [
-        "string",
-        "null"
-      ]
-    },
-    "mailFolders": {
-      "type": [
-        "string",
-        "null"
-      ]
-    },
-    "messages": {
-      "type": [
-        "string",
-        "null"
-      ]
-    },
-    "outlook": {
-      "type": [
-        "string",
-        "null"
-      ]
-    },
-    "people": {
-      "type": [
-        "string",
-        "null"
-      ]
-    },
-    "drive": {
-      "type": [
-        "string",
-        "null"
-      ]
-    },
-    "drives": {
-      "type": [
-        "string",
-        "null"
-      ]
-    },
-    "followedSites": {
-      "type": [
-        "string",
-        "null"
-      ]
-    },
-    "extensions": {
-      "type": [
-        "string",
-        "null"
-      ]
-    },
-    "agreementAcceptances": {
-      "type": [
-        "string",
-        "null"
-      ]
-    },
-    "managedDevices": {
-      "type": [
-        "string",
-        "null"
-      ]
-    },
-    "managedAppRegistrations": {
-      "type": [
-        "string",
-        "null"
-      ]
-    },
-    "deviceManagementTroubleshootingEvents": {
-      "type": [
-        "string",
-        "null"
-      ]
-    },
-    "planner": {
-      "type": [
-        "string",
-        "null"
-      ]
-    },
-    "insights": {
-      "type": [
-        "string",
-        "null"
-      ]
-    },
-    "settings": {
-      "type": [
-        "string",
-        "null"
-      ]
-    },
-    "onenote": {
-      "type": [
-        "string",
-        "null"
-      ]
-    },
-    "photo": {
-      "type": [
-        "string",
-        "null"
-      ]
-    },
-    "photos": {
-      "type": [
-        "string",
-        "null"
-      ]
-    },
-    "activities": {
-      "type": [
-        "string",
-        "null"
-      ]
-    },
-    "onlineMeetings": {
-      "type": [
-        "string",
-        "null"
-      ]
-    },
-    "presence": {
-      "type": [
-        "string",
-        "null"
-      ]
-    },
-    "authentication": {
-      "type": [
-        "string",
-        "null"
-      ]
-    },
-    "chats": {
-      "type": [
-        "string",
-        "null"
-      ]
-    },
-    "joinedTeams": {
-      "type": [
-        "string",
-        "null"
-      ]
-    },
-    "teamwork": {
-      "type": [
-        "string",
-        "null"
-      ]
-    },
-    "todo": {
-      "type": [
-        "string",
-        "null"
-      ]
-    },
-    "deletedDateTime": {
-      "type": [
-        "string",
-        "null"
-      ],
-      "format": "date-time"
-    },
-    "id": {
-      "type": "string"
     }
   }
 }

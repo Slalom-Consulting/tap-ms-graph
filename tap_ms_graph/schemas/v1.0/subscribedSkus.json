@@ -20,6 +20,9 @@
       ],
       "format": "int32"
     },
+    "id": {
+      "type": "string"
+    },
     "prepaidUnits": {
       "type": [
         "string",
