@@ -154,9 +154,9 @@ class MSGraphStream(RESTStream):
             child_context = record[self.record_child_context]
 
         return child_context
-    
+
     def post_process(self, row: dict, context: dict | None = None) -> dict | None:
-        #converts complex types to string
+        # converts complex types to string
 
         new_row = row.copy()
         for k, v in row.items():

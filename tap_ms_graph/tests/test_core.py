@@ -19,7 +19,7 @@ def test_standard_tap_tests():
     for test in tests:
         if test.__name__ in ("_test_stream_connections"):
             continue
-        
+
         test()
 
 
