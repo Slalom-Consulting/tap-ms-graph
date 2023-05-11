@@ -96,8 +96,25 @@ def get_schema(context: str) -> dict:
     fixed_schema = _fix_schema_inheritance(full_schema)
     schema = _convert_complex_types_to_string(fixed_schema)
 
-    sorted_properties = sorted(schema.get("properties", {}).items())
-    schema["properties"] = dict(sorted_properties)
+    # sorted_properties = sorted(schema.get("properties", {}).items())
+    # schema["properties"] = dict(sorted_properties)
+
+    return schema
+
+
+def get_type_schema(odata_context: str, odata_type: str) -> dict:
+    """Get a Singer compatible schema for a specified odata type."""
+    link = urlsplit(odata_context)
+    version = link.path.split("/")[1]
+    metadata = load_metadata(version)
+
+    # Singer formatting
+    odata_type = odata_type.lstrip("#")
+    full_schema = metadata.get("definitions", {}).get(odata_type, {})
+    schema = _convert_complex_types_to_string(full_schema)
+
+    # sorted_properties = sorted(schema.get("properties", {}).items())
+    # schema["properties"] = dict(sorted_properties)
 
     return schema
 
