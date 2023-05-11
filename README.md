@@ -3,7 +3,6 @@
 `tap-ms-graph` is a Singer tap for MSGraph.
 
 Built with the [Meltano Tap SDK](https://sdk.meltano.com) for Singer Taps and the [Microsoft Graph API reference](https://learn.microsoft.com/en-us/graph/api/overview?view=graph-rest-1.0&preserve-view=true).
-Built with the [Meltano Tap SDK](https://sdk.meltano.com) for Singer Taps and the [Microsoft Graph API reference](https://learn.microsoft.com/en-us/graph/api/overview?view=graph-rest-1.0&preserve-view=true).
 
 <!--
 
@@ -17,15 +16,12 @@ Install from PyPi:
 pipx install tap-ms-graph
 ```
 -->
--->
 
 Install from GitHub:
 
 ```bash
 pipx install git+https://github.com/Slalom-Consulting/tap-ms-graph.git@main
-pipx install git+https://github.com/Slalom-Consulting/tap-ms-graph.git@main
 ```
-
 
 ## Configuration
 
@@ -41,7 +37,6 @@ tap-ms-graph --about --format=markdown
 ```
 -->
 
-
 | Setting             | Required | Default | Description |
 |:--------------------|:--------:|:-------:|:------------|
 | tenant              | True     | None    | The directory tenant that you want to request permission from. The value can be in GUID or a friendly name format. |
@@ -51,19 +46,6 @@ tap-ms-graph --about --format=markdown
 | api_version         | False    | v1.0    | The version of the Microsoft Graph API to use |
 | auth_url            | False    | None    | Override the Azure AD authentication base URL. Required if using a national cloud. |
 | api_url             | False    | None    | Override the Graph API service base URL. Required if using a national cloud. |
-
-
-
-| Setting             | Required | Default | Description |
-|:--------------------|:--------:|:-------:|:------------|
-| tenant              | True     | None    | The directory tenant that you want to request permission from. The value can be in GUID or a friendly name format. |
-| client_id           | True     | None    | The application ID that the Azure app registration portal assigned when you registered your app. |
-| client_secret       | True     | None    | The client secret that you generated for your app in the app registration portal. |
-| stream_config       | False    | None    | Custom configuration for streams. |
-| api_version         | False    | v1.0    | The version of the Microsoft Graph API to use |
-| auth_url            | False    | None    | Override the Azure AD authentication base URL. Required if using a national cloud. |
-| api_url             | False    | None    | Override the Graph API service base URL. Required if using a national cloud. |
-
 
 A full list of supported settings and capabilities for this
 tap is available by running:
@@ -73,6 +55,7 @@ tap-ms-graph --about
 ```
 
 ### Custom Stream Configuration
+
 Many streams support [advanced query capabilities](https://learn.microsoft.com/en-us/graph/aad-advanced-queries?tabs=http) (eg. `$count`, `$select`, `$filter`, `$search`, `$orderby`, ...) and can be added to the tap configuration stream parameters:
 
 ```json
@@ -92,9 +75,9 @@ This Singer tap will automatically import any environment variables within the w
 `.env` if the `--config=ENV` is provided, such that config values will be considered if a matching
 environment variable is set either in the terminal context or in the `.env` file.
 
+<!--
 ### Source Authentication and Authorization
 
-<!--
 Developer TODO: If your tap requires special access on the source system, or any special authentication requirements, provide those here.
 -->
 
