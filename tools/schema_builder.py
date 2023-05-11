@@ -37,7 +37,7 @@ def get_refs(dom_doc: dict, odata_context: str) -> list:
     base_url = f"https://graph.microsoft.com/{API_VERSION}/"
     val = odata_context.lstrip(base_url)
 
-    contexts: Dict[dict] = dom_doc.get("anyOf", {})
+    contexts: Dict[dict] = dom_doc.get("anyOf", [])
     for c in contexts:
         properties = c.get("properties", {})
 
