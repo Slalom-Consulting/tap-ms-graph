@@ -24,8 +24,9 @@ class MSGraphStream(RESTStream):
     """MSGraph stream class."""
 
     records_jsonpath = "$.value[*]"
-    record_child_context = "id"
-    primary_keys = []  # configure per stream
+
+    # configure per stream
+    primary_keys = []
     odata_context = ""
     odata_type = ""
 
@@ -152,14 +153,6 @@ class MSGraphStream(RESTStream):
         self.logger.info(f"INFO response: {log_text}")
 
         return super().parse_response(response)
-
-    def get_child_context(self, record: dict, context: Optional[dict]) -> dict:
-        child_context = {}
-
-        if self.record_child_context:
-            child_context = record[self.record_child_context]
-
-        return child_context
 
     def post_process(self, row: dict, context: dict | None = None) -> dict | None:
         # converts complex types to string
