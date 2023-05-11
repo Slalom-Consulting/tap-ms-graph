@@ -19,7 +19,7 @@ class GroupsStream(MSGraphStream):
 
 class GroupMembersStream(MSGraphStream):
     parent_stream_type = GroupsStream
-    name = "group_members"
+    name = "groupMembers"
     path = "/groups/{id}/members"
     primary_keys = ["group_id", "id"]
     replication_key = None
