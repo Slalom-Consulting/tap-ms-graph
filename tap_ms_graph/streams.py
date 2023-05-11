@@ -22,9 +22,25 @@ class GroupMembersStream(MSGraphStream):
     parent_stream_type = GroupsStream
     name = "group_members"
     path = "/groups/{id}/members"
-    primary_keys = ["id"]
+    primary_keys = ["group_id", "id"]
     replication_key = None
     odata_context = "groups"
+
+    @property
+    def schema(self):
+        schema = super().schema
+        added_schema = {
+            "group_id": {
+                "type": "string"
+            }
+        }
+
+        schema["properties"] = {**added_schema, **schema["properties"]}
+
+        return schema
+
+    def post_process(self, row: dict, context: Optional[dict] = None) -> dict:
+        return {**{"group_id": context.get("id")}, **row}
 
 
 class SubscribedSkusStream(MSGraphStream):
