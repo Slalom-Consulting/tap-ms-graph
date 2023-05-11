@@ -3,7 +3,6 @@
 from tap_ms_graph.client import MSGraphStream
 
 
-# V1.0
 class SubscribedSkusStream(MSGraphStream):
     name = "subscribedSkus"
     path = "/subscribedSkus"
@@ -18,3 +17,19 @@ class UsersStream(MSGraphStream):
     primary_keys = ["id"]
     replication_key = None
     odata_context = "users"
+
+
+class GroupsStream(MSGraphStream):
+    name = "groups"
+    path = "/groups"
+    primary_keys = ["id"]
+    replication_key = None
+    odata_context = "groups"
+
+
+class GroupMembersStream(MSGraphStream):
+    name = "groups"
+    path = "/groups/{id}/members"
+    primary_keys = ["id"]
+    replication_key = None
+    odata_context = "groups"
