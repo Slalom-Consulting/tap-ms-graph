@@ -12,10 +12,7 @@ class GroupsStream(MSGraphStream):
     odata_context = "groups"
 
     def get_child_context(self, record: dict, context: Optional[dict]) -> dict:
-        """Return a context dictionary for child streams."""
-        return {
-            "id": record["id"],
-        }
+        return {"id": record["id"]}
 
 
 class GroupMembersStream(MSGraphStream):
@@ -29,14 +26,14 @@ class GroupMembersStream(MSGraphStream):
     @property
     def schema(self):
         schema = super().schema
-        added_schema = {"group_id": {"type": "string"}}
-
-        schema["properties"] = {**added_schema, **schema["properties"]}
+        parent_schema = {"group_id": {"type": "string"}}
+        schema["properties"] = {**parent_schema, **schema["properties"]}
 
         return schema
 
-    def post_process(self, row: dict, context: Optional[dict] = None) -> dict:
-        return {**{"group_id": context.get("id")}, **row}
+    def post_process(self, row: dict, context: dict) -> dict:  # type: ignore[override]
+        parent_fields = {"group_id": context.get("id", "")}
+        return {**parent_fields, **row}
 
 
 class SubscribedSkusStream(MSGraphStream):
