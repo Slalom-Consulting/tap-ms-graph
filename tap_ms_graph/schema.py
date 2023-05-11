@@ -1,8 +1,10 @@
+"""Schema functions for tap-ms-graph."""
+
 import re
 from pathlib import Path
 from urllib.parse import urlsplit
 
-import jsonref
+import jsonref  # type: ignore[import]
 from memoization import cached
 
 TAP_DIR = Path(__file__).parent
@@ -12,6 +14,7 @@ METADATA_FILE = f"{TAP_DIR}/metadata/{VERSION}.json"
 
 @cached
 def load_metadata(version: str) -> dict:
+    """Load a metadata doc for a specified api version."""
     file = METADATA_FILE.format(version=version)
 
     with open(file, "r") as fp:
@@ -21,6 +24,7 @@ def load_metadata(version: str) -> dict:
 
 
 def get_ref(context: str) -> dict:
+    """Get the metadata for a specified odata context."""
     link = urlsplit(context)
     version = link.path.split("/")[1]
     metadata = load_metadata(version)
@@ -38,7 +42,7 @@ def get_ref(context: str) -> dict:
     raise ValueError(f"@odata.context not found: {context}")
 
 
-def fix_schema_inheritance(schema: dict):
+def _fix_schema_inheritance(schema: dict):
     of_keys = ("allOf", "anyOf", "oneOf")
 
     for k in of_keys:
@@ -61,7 +65,7 @@ def fix_schema_inheritance(schema: dict):
     return schema
 
 
-def convert_complex_types_to_string(schema: dict):
+def _convert_complex_types_to_string(schema: dict):
     of_keys = ("allOf", "anyOf", "oneOf")
     replacement = {"type": ["string", "null"]}
 
@@ -81,6 +85,7 @@ def convert_complex_types_to_string(schema: dict):
 
 
 def get_schema(context: str) -> dict:
+    """Get a Singer compatible schema for a specified odata context."""
     ref = get_ref(context)
 
     value = ref.get("properties", {}).get("value", {}).get("items", {})
@@ -88,8 +93,8 @@ def get_schema(context: str) -> dict:
     full_schema = value or allOf[0]
 
     # Singer formatting
-    fixed_schema = fix_schema_inheritance(full_schema)
-    schema = convert_complex_types_to_string(fixed_schema)
+    fixed_schema = _fix_schema_inheritance(full_schema)
+    schema = _convert_complex_types_to_string(fixed_schema)
 
     sorted_properties = sorted(schema.get("properties", {}).items())
     schema["properties"] = dict(sorted_properties)
@@ -97,14 +102,14 @@ def get_schema(context: str) -> dict:
     return schema
 
 
-def dump_schema(context: str):
-    schema = get_schema(context)
-
-    link = urlsplit(context)
-    version = link.path.split("/")[1]
-
-    file_name = link.fragment.split("(")[0]
-    schema_fp = f"tap_ms_graph/schemas/{version}/{file_name}.json"
-
-    with open(schema_fp, "w") as fp:
-        jsonref.dump(schema, fp, indent=2)
+# def dump_schema(context: str):
+#     schema = get_schema(context)
+#
+#     link = urlsplit(context)
+#     version = link.path.split("/")[1]
+#
+#     file_name = link.fragment.split("(")[0]
+#     schema_fp = f"tap_ms_graph/schemas/{version}/{file_name}.json"
+#
+#     with open(schema_fp, "w") as fp:
+#         jsonref.dump(schema, fp, indent=2)
