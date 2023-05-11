@@ -29,11 +29,7 @@ class GroupMembersStream(MSGraphStream):
     @property
     def schema(self):
         schema = super().schema
-        added_schema = {
-            "group_id": {
-                "type": "string"
-            }
-        }
+        added_schema = {"group_id": {"type": "string"}}
 
         schema["properties"] = {**added_schema, **schema["properties"]}
 
