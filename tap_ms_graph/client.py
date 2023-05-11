@@ -18,7 +18,6 @@ from tap_ms_graph.pagination import MSGraphPaginator
 from tap_ms_graph.schema import get_schema
 
 API_URL = "https://graph.microsoft.com"
-# SCHEMAS_DIR = Path(__file__).parent / Path("./schemas")
 
 
 class MSGraphStream(RESTStream):
@@ -26,7 +25,6 @@ class MSGraphStream(RESTStream):
 
     records_jsonpath = "$.value[*]"
     record_child_context = "id"
-    # schema_filename: str = ""  # configure per stream
     primary_keys = []  # configure per stream
     odata_context = ""
 
@@ -41,11 +39,6 @@ class MSGraphStream(RESTStream):
             API_URL, self.api_version, self.odata_context
         )
         return get_schema(context)
-
-    # @property
-    # def schema_filepath(self) -> str:  # type: ignore[override]
-    #   api_path = SCHEMAS_DIR.joinpath(self.api_version)
-    #   return str(api_path.joinpath(self.schema_filename))
 
     @property
     def url_base(self) -> str:

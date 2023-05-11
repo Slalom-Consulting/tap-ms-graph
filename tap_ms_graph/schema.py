@@ -5,6 +5,7 @@ from urllib.parse import urlsplit
 import jsonref
 from memoization import cached
 
+
 TAP_DIR = Path(__file__).parent
 VERSION = "{version}"
 METADATA_FILE = f"{TAP_DIR}/metadata/{VERSION}.json"

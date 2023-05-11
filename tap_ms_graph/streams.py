@@ -10,7 +10,6 @@ class SubscribedSkusStream(MSGraphStream):
     primary_keys = ["id"]
     replication_key = None
     odata_context = "subscribedSkus"
-    # schema_filename = "subscribedSkus.json"
 
 
 class UsersStream(MSGraphStream):
@@ -19,4 +18,3 @@ class UsersStream(MSGraphStream):
     primary_keys = ["id"]
     replication_key = None
     odata_context = "users"
-    # schema_filename = "users.json"

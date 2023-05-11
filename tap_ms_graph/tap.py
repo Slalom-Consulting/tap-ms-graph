@@ -55,29 +55,7 @@ class TapMSGraph(Tap):
                         th.StringType,
                         description="URL formatted parameters string to \
                             be used for stream.",
-                    ),
-                    # th.Property(
-                    #    "primary_keys",
-                    #    th.ArrayType(th.StringType),
-                    #    description="Override the default list of primary keys.",
-                    # ),
-                    # th.Property(
-                    #    "replication_key",
-                    #    th.StringType,
-                    #    description="Override the default replication key.",
-                    # ),
-                    # th.Property(
-                    #    "schema_discovery",
-                    #    th.BooleanType,
-                    #    description="Override the default schema \
-                    # and use discovery mode.",
-                    # ),
-                    # th.Property(
-                    #    "schema",
-                    #    th.StringType,
-                    #    description="Override the default schema \
-                    # with a custom JSONSchema string.",
-                    # ),
+                    )
                 )
             ),
             description="Custom configuration for streams.",
