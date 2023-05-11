@@ -651,7 +651,7 @@ six = "*"
 name = "jsonref"
 version = "1.1.0"
 description = "jsonref is a library for automatic dereferencing of JSON Reference objects for Python."
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.7"
 files = [
@@ -1598,4 +1598,4 @@ s3 = ["fs-s3fs"]
 [metadata]
 lock-version = "2.0"
 python-versions = "<3.12,>=3.8.0"
-content-hash = "4e5286722aa0a85a07faee32672d67b40dd1ff4afc2eda8253ce3863d7d0101b"
+content-hash = "02fb1695b6447d2e9414e64332dcf9caa8e3e95ec12caf64397e40b073962254"
