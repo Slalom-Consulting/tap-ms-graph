@@ -4,7 +4,8 @@ from __future__ import annotations
 
 import json
 import uuid
-from pathlib import Path
+
+# from pathlib import Path
 from typing import Any, Dict, Generator, Iterable, Optional, Union
 from urllib.parse import parse_qsl, urljoin
 
@@ -14,9 +15,10 @@ from singer_sdk.streams import RESTStream
 
 from tap_ms_graph.auth import MSGraphAuthenticator
 from tap_ms_graph.pagination import MSGraphPaginator
+from tap_ms_graph.schema import get_schema
 
 API_URL = "https://graph.microsoft.com"
-SCHEMAS_DIR = Path(__file__).parent / Path("./schemas")
+# SCHEMAS_DIR = Path(__file__).parent / Path("./schemas")
 
 
 class MSGraphStream(RESTStream):
@@ -24,8 +26,9 @@ class MSGraphStream(RESTStream):
 
     records_jsonpath = "$.value[*]"
     record_child_context = "id"
-    schema_filename: str = ""  # configure per stream
+    # schema_filename: str = ""  # configure per stream
     primary_keys = []  # configure per stream
+    odata_context = ""
 
     @property
     def api_version(self) -> str:
@@ -33,9 +36,16 @@ class MSGraphStream(RESTStream):
         return str(self.config.get("api_version", ""))
 
     @property
-    def schema_filepath(self) -> str:  # type: ignore[override]
-        api_path = SCHEMAS_DIR.joinpath(self.api_version)
-        return str(api_path.joinpath(self.schema_filename))
+    def schema(self):
+        context = "{}/{}/$metadata#{}".format(
+            API_URL, self.api_version, self.odata_context
+        )
+        return get_schema(context)
+
+    # @property
+    # def schema_filepath(self) -> str:  # type: ignore[override]
+    #   api_path = SCHEMAS_DIR.joinpath(self.api_version)
+    #   return str(api_path.joinpath(self.schema_filename))
 
     @property
     def url_base(self) -> str:
