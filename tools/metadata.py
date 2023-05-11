@@ -1,4 +1,5 @@
 import json
+
 import lxml.etree as ET
 import requests
 
@@ -7,13 +8,10 @@ XSL_URI = "https://raw.githubusercontent.com/oasis-tcs/odata-json-schema/main/to
 ODATA_META_SCHEMA_URI = "https://raw.githubusercontent.com/oasis-tcs/odata-json-schema/main/tools/odata-meta-schema.json"
 METADATA_FILE = "tap_ms_graph/metadata/{version}.json"
 
-versions = [
-    "beta",
-    "v1.0"
-]
+versions = ["beta", "v1.0"]
 
 
-def get_metadata(version:str) -> dict:
+def get_metadata(version: str) -> dict:
     link = XML_URI.format(version=version)
     xml_file = requests.get(link).content
     xsl_file = requests.get(XSL_URI).content
@@ -33,7 +31,7 @@ def get_metadata(version:str) -> dict:
     return json.loads(dom_json_fixed)
 
 
-def dump_metadata(version:str) -> None:
+def dump_metadata(version: str) -> None:
     metadata = get_metadata(version)
     file = METADATA_FILE.format(version=version)
 

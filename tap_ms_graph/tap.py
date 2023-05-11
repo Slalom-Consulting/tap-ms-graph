@@ -55,7 +55,7 @@ class TapMSGraph(Tap):
                         th.StringType,
                         description="URL formatted parameters string to \
                             be used for stream.",
-                    )
+                    ),
                 )
             ),
             description="Custom configuration for streams.",
@@ -64,7 +64,7 @@ class TapMSGraph(Tap):
             "api_version",
             th.StringType,
             default="v1.0",
-            allowed_values=['v1.0', 'beta'],
+            allowed_values=["v1.0", "beta"],
             description="The version of the Microsoft Graph API to use.",
         ),
         th.Property(
