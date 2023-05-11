@@ -8,6 +8,7 @@ ODATA_META_SCHEMA_URI = "https://raw.githubusercontent.com/oasis-tcs/odata-json-
 METADATA_FILE = "tap_ms_graph/metadata/{version}.json"
 
 versions = [
+    "beta",
     "v1.0"
 ]
 
