@@ -5,12 +5,18 @@ from typing import List
 from singer_sdk import Stream, Tap
 from singer_sdk import typing as th
 
-from tap_ms_graph.streams import GroupMembersStream, GroupsStream, UsersStream
+from tap_ms_graph.streams import (
+    GroupMembersStream,
+    GroupsStream,
+    SubscribedSkusStream,
+    UsersStream,
+)
 
 STREAM_TYPES = [
-    UsersStream,
     GroupsStream,
     GroupMembersStream,
+    SubscribedSkusStream,
+    UsersStream,
 ]
 
 
