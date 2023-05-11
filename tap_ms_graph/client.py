@@ -15,7 +15,7 @@ from singer_sdk.streams import RESTStream
 
 from tap_ms_graph.auth import MSGraphAuthenticator
 from tap_ms_graph.pagination import MSGraphPaginator
-from tap_ms_graph.schema import get_schema
+from tap_ms_graph.schema import get_schema, get_type_schema
 
 API_URL = "https://graph.microsoft.com"
 
@@ -27,6 +27,7 @@ class MSGraphStream(RESTStream):
     record_child_context = "id"
     primary_keys = []  # configure per stream
     odata_context = ""
+    odata_type = ""
 
     @property
     def api_version(self) -> str:
@@ -35,10 +36,21 @@ class MSGraphStream(RESTStream):
 
     @property
     def schema(self):
-        context = "{}/{}/$metadata#{}".format(
-            API_URL, self.api_version, self.odata_context
+        link = "{host}/{version}/$metadata#{endpoint}"
+
+        odata_context = link.format(
+            host=API_URL, version=self.api_version, endpoint=self.odata_context
         )
-        return get_schema(context)
+
+        schema = get_schema(odata_context)
+
+        if self.odata_type:
+            type_schema = get_type_schema(odata_context, self.odata_type)
+            type_properties = type_schema.get("properties", {})
+
+            schema["properties"] = {**schema["properties"], **type_properties}
+
+        return schema
 
     @property
     def url_base(self) -> str:
