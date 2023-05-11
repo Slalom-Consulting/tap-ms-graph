@@ -1,14 +1,13 @@
 import re
-from urllib.parse import urlsplit
 from pathlib import Path
+from urllib.parse import urlsplit
 
 import jsonref
 from memoization import cached
 
-
-SCHEMAS_DIR = Path(__file__).parent / Path("./schemas")
+TAP_DIR = Path(__file__).parent
 VERSION = "{version}"
-METADATA_FILE = f"{SCHEMAS_DIR}/{VERSION}/metadata.json"
+METADATA_FILE = f"{TAP_DIR}/metadata/{VERSION}.json"
 
 
 @cached

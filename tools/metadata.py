@@ -5,7 +5,7 @@ import requests
 XML_URI = "https://graph.microsoft.com/{version}/$metadata"
 XSL_URI = "https://raw.githubusercontent.com/oasis-tcs/odata-json-schema/main/tools/V4-CSDL-to-JSONSchema.xsl"
 ODATA_META_SCHEMA_URI = "https://raw.githubusercontent.com/oasis-tcs/odata-json-schema/main/tools/odata-meta-schema.json"
-METADATA_FILE = "tap_ms_graph/schemas/{version}/metadata.json"
+METADATA_FILE = "tap_ms_graph/metadata/{version}.json"
 
 versions = [
     "v1.0"
