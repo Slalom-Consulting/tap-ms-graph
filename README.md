@@ -23,7 +23,6 @@ Install from GitHub:
 pipx install git+https://github.com/Slalom-Consulting/tap-ms-graph.git@main
 ```
 
-
 ## Configuration
 
 ### Accepted Config Options
@@ -38,7 +37,6 @@ tap-ms-graph --about --format=markdown
 ```
 -->
 
-
 | Setting             | Required | Default | Description |
 |:--------------------|:--------:|:-------:|:------------|
 | tenant              | True     | None    | The directory tenant that you want to request permission from. The value can be in GUID or a friendly name format. |
@@ -49,7 +47,6 @@ tap-ms-graph --about --format=markdown
 | auth_url            | False    | None    | Override the Azure AD authentication base URL. Required if using a national cloud. |
 | api_url             | False    | None    | Override the Graph API service base URL. Required if using a national cloud. |
 
-
 A full list of supported settings and capabilities for this
 tap is available by running:
 
@@ -58,21 +55,19 @@ tap-ms-graph --about
 ```
 
 ### Custom Stream Configuration
-Many streams support [advanced query capabilities](https://learn.microsoft.com/en-us/graph/aad-advanced-queries?tabs=http) (eg. `$count`, `$select`, `$filter`, `$search`, `$orderby`, ...) and can be added to the tap configuration json:
+
+Many streams support [advanced query capabilities](https://learn.microsoft.com/en-us/graph/aad-advanced-queries?tabs=http) (eg. `$count`, `$select`, `$filter`, `$search`, `$orderby`, ...) and can be added to the tap configuration stream parameters:
 
 ```json
-"stream_config": [
-    {
-        "stream": "{stream_name}",
-        "params": [
-            {"param": "{parameter_name}", "value": "{parameter_value}"},
-            ...
-        ]
-    },
-    ...
-]
+{
+    "stream_config": [
+        {
+            "stream": "STREAM_NAME",
+            "parameters": "URL_QUERY_STRING"
+        }
+    ]
+}
 ```
-
 
 ### Configure using environment variables
 
@@ -80,9 +75,9 @@ This Singer tap will automatically import any environment variables within the w
 `.env` if the `--config=ENV` is provided, such that config values will be considered if a matching
 environment variable is set either in the terminal context or in the `.env` file.
 
+<!--
 ### Source Authentication and Authorization
 
-<!--
 Developer TODO: If your tap requires special access on the source system, or any special authentication requirements, provide those here.
 -->
 
