@@ -5,7 +5,7 @@ from tap_ms_graph.client import MSGraphStream
 
 
 class MSGraphChildStream(MSGraphStream):
-    parent_context_schema = {}
+    parent_context_schema: dict = {}
 
     @property
     def schema(self):

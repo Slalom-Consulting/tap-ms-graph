@@ -29,7 +29,7 @@ class MSGraphStream(RESTStream):
     primary_keys = []
     odata_context = ""
     odata_type = ""
-    child_context = {}
+    child_context: dict = {}
 
     @property
     def api_version(self) -> str:
