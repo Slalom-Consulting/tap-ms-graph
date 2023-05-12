@@ -1,33 +1,7 @@
 """Stream type classes for tap-ms-graph."""
 from __future__ import annotations
 
-from tap_ms_graph.client import MSGraphStream
-
-
-class MSGraphChildStream(MSGraphStream):
-    parent_context_schema: dict = {}
-
-    @property
-    def schema(self):
-        schema = super().schema
-        odata_type = {"@odata.type": {"type": ["string", "null"]}}
-
-        schema["properties"] = {
-            **self.parent_context_schema,
-            **odata_type,
-            **schema["properties"],
-        }
-
-        return schema
-
-    def post_process(self, row: dict, context: dict | None = None) -> dict:
-        processed_row = super().post_process(row, context) or {}
-
-        if context:
-            context_fields = {k: context.get(k, "") for k in context.keys()}
-            return {**context_fields, **processed_row}
-
-        return processed_row
+from tap_ms_graph.client import MSGraphChildStream, MSGraphStream
 
 
 class GroupsStream(MSGraphStream):
