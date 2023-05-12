@@ -29,6 +29,7 @@ class MSGraphStream(RESTStream):
     primary_keys = []
     odata_context = ""
     odata_type = ""
+    child_context = {}
 
     @property
     def api_version(self) -> str:
@@ -172,3 +173,6 @@ class MSGraphStream(RESTStream):
                 new_row[k] = json.dumps(v)
 
         return new_row
+
+    def get_child_context(self, record: dict, context: Optional[dict]) -> dict:
+        return {v: record[k] for k, v in self.child_context.items()}
