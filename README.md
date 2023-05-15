@@ -60,12 +60,11 @@ Many streams support [advanced query capabilities](https://learn.microsoft.com/e
 
 ```json
 {
-    "stream_config": [
-        {
-            "stream": "STREAM_NAME",
-            "parameters": "URL_QUERY_STRING"
+    "stream_config": {
+        "name_of_stream": {
+            "parameters": "url_query_string"
         }
-    ]
+    }
 }
 ```
 
