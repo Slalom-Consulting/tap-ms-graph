@@ -89,29 +89,20 @@ class MSGraphStream(RESTStream):
     def get_new_paginator(self) -> MSGraphPaginator:
         return MSGraphPaginator()
 
-    def _get_stream_config(self) -> dict:
-        """Get parameters set in config."""
-        config: dict = {}
+    def get_stream_config(self) -> dict:
+        """Get config for stream."""
+        stream_configs = self.config.get("stream_config", {})
+        return stream_configs.get(self.name, {})
 
-        stream_configs = self.config.get("stream_config", [])
-        if not stream_configs:
-            return config
-
-        config_list = [
-            conf for conf in stream_configs if conf.get("stream", "") == self.name
-        ] or [None]
-        config_dict = config_list[-1] or {}
-        stream_config = {k: v for k, v in config_dict.items() if k != "stream"}
-        return stream_config
-
-    def _get_stream_params(self) -> dict:
-        stream_params = self._get_stream_config().get("parameters", "")
+    def get_stream_params(self) -> dict:
+        """Get parameters set in config for stream."""
+        stream_params = self.get_stream_config().get("parameters", "")
         return {qry[0]: qry[1] for qry in parse_qsl(stream_params.lstrip("?"))}
 
     def get_url_params(
         self, context: Optional[dict], next_page_token: Optional[Any]
     ) -> Dict[str, Any]:
-        params = self._get_stream_params()
+        params = self.get_stream_params()
 
         # Ensure that $count is True when used in $filter parameter
         filter_params = params.get("$filter", "")
