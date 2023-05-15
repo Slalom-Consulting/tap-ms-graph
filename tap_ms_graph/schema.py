@@ -96,9 +96,6 @@ def get_schema(context: str) -> dict:
     fixed_schema = _fix_schema_inheritance(full_schema)
     schema = _convert_complex_types_to_string(fixed_schema)
 
-    # sorted_properties = sorted(schema.get("properties", {}).items())
-    # schema["properties"] = dict(sorted_properties)
-
     return schema
 
 
@@ -113,20 +110,4 @@ def get_type_schema(odata_context: str, odata_type: str) -> dict:
     full_schema = metadata.get("definitions", {}).get(odata_type, {})
     schema = _convert_complex_types_to_string(full_schema)
 
-    # sorted_properties = sorted(schema.get("properties", {}).items())
-    # schema["properties"] = dict(sorted_properties)
-
     return schema
-
-
-# def dump_schema(context: str):
-#     schema = get_schema(context)
-#
-#     link = urlsplit(context)
-#     version = link.path.split("/")[1]
-#
-#     file_name = link.fragment.split("(")[0]
-#     schema_fp = f"tap_ms_graph/schemas/{version}/{file_name}.json"
-#
-#     with open(schema_fp, "w") as fp:
-#         jsonref.dump(schema, fp, indent=2)
