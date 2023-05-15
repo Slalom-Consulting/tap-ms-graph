@@ -9,7 +9,6 @@ class GroupsStream(MSGraphStream):
     path = "/groups"
     primary_keys = ["id"]
     odata_context = "groups"
-
     child_context = {"id": "group_id"}
 
 
