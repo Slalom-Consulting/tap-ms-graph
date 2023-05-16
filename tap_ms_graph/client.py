@@ -4,8 +4,6 @@ from __future__ import annotations
 
 import json
 import uuid
-
-# from pathlib import Path
 from typing import Any, Dict, Generator, Iterable, Optional, Union
 from urllib.parse import parse_qsl, urljoin
 
@@ -24,10 +22,12 @@ class MSGraphStream(RESTStream):
     """MSGraph stream class."""
 
     records_jsonpath = "$.value[*]"
-    record_child_context = "id"
-    primary_keys = []  # configure per stream
+
+    # configure per stream
+    primary_keys = []
     odata_context = ""
     odata_type = ""
+    child_context: dict = {}
 
     @property
     def api_version(self) -> str:
@@ -89,29 +89,20 @@ class MSGraphStream(RESTStream):
     def get_new_paginator(self) -> MSGraphPaginator:
         return MSGraphPaginator()
 
-    def _get_stream_config(self) -> dict:
-        """Get parameters set in config."""
-        config: dict = {}
+    def get_stream_config(self) -> dict:
+        """Get config for stream."""
+        stream_configs = self.config.get("stream_config", {})
+        return stream_configs.get(self.name, {})
 
-        stream_configs = self.config.get("stream_config", [])
-        if not stream_configs:
-            return config
-
-        config_list = [
-            conf for conf in stream_configs if conf.get("stream", "") == self.name
-        ] or [None]
-        config_dict = config_list[-1] or {}
-        stream_config = {k: v for k, v in config_dict.items() if k != "stream"}
-        return stream_config
-
-    def _get_stream_params(self) -> dict:
-        stream_params = self._get_stream_config().get("parameters", "")
+    def get_stream_params(self) -> dict:
+        """Get parameters set in config for stream."""
+        stream_params = self.get_stream_config().get("parameters", "")
         return {qry[0]: qry[1] for qry in parse_qsl(stream_params.lstrip("?"))}
 
     def get_url_params(
         self, context: Optional[dict], next_page_token: Optional[Any]
     ) -> Dict[str, Any]:
-        params = self._get_stream_params()
+        params = self.get_stream_params()
 
         # Ensure that $count is True when used in $filter parameter
         filter_params = params.get("$filter", "")
@@ -162,14 +153,6 @@ class MSGraphStream(RESTStream):
 
         return super().parse_response(response)
 
-    def get_child_context(self, record: dict, context: Optional[dict]) -> dict:
-        child_context = {}
-
-        if self.record_child_context:
-            child_context = record[self.record_child_context]
-
-        return child_context
-
     def post_process(self, row: dict, context: dict | None = None) -> dict | None:
         # converts complex types to string
 
@@ -179,3 +162,32 @@ class MSGraphStream(RESTStream):
                 new_row[k] = json.dumps(v)
 
         return new_row
+
+    def get_child_context(self, record: dict, context: Optional[dict]) -> dict:
+        return {v: record[k] for k, v in self.child_context.items()}
+
+
+class MSGraphChildStream(MSGraphStream):
+    parent_context_schema: dict = {}
+
+    @property
+    def schema(self):
+        schema = super().schema
+        odata_type = {"@odata.type": {"type": ["string", "null"]}}
+
+        schema["properties"] = {
+            **self.parent_context_schema,
+            **odata_type,
+            **schema["properties"],
+        }
+
+        return schema
+
+    def post_process(self, row: dict, context: dict | None = None) -> dict:
+        processed_row = super().post_process(row, context) or {}
+
+        if context:
+            context_fields = {k: context.get(k, "") for k in context.keys()}
+            return {**context_fields, **processed_row}
+
+        return processed_row
