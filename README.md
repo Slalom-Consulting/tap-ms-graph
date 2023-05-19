@@ -23,6 +23,15 @@ Install from GitHub:
 pipx install git+https://github.com/Slalom-Consulting/tap-ms-graph.git@main
 ```
 
+## Capabilities
+
+* `catalog`
+* `state`
+* `discover`
+* `about`
+* `stream-maps`
+* `schema-flattening`
+
 ## Configuration
 
 ### Accepted Config Options
@@ -54,15 +63,27 @@ tap is available by running:
 tap-ms-graph --about
 ```
 
-### Custom Stream Configuration
+### Settings for Specific Streams
 
-Many streams support [advanced query capabilities](https://learn.microsoft.com/en-us/graph/aad-advanced-queries?tabs=http) (eg. `$count`, `$select`, `$filter`, `$search`, `$orderby`, ...) and can be added to the tap configuration stream parameters:
+Settings can be added on a per-stream basis and can be set using the stream_config setting. The stream_config setting takes a dictionary with the stream name as the key and supports the following configuration options:
+
+| Setting             | Required | Default | Description |
+|:--------------------|:--------:|:-------:|:------------|
+| parameters          | False    | None    | URL query string to send to the stream endpoint |
+
+#### Stream Parameters
+
+Many streams support [advanced query capabilities](https://learn.microsoft.com/en-us/graph/aad-advanced-queries?tabs=http) (eg. `$count`, `$select`, `$filter`, `$search`, `$orderby`, ...) and can be added to the tap configuration stream parameters.
+
+Example:
 
 ```json
+# config.json
+
 {
     "stream_config": {
-        "name_of_stream": {
-            "parameters": "url_query_string"
+        "users": {
+            "parameters": "?$select=id"
         }
     }
 }
