@@ -78,8 +78,6 @@ Many streams support [advanced query capabilities](https://learn.microsoft.com/e
 Example:
 
 ```json
-# config.json
-
 {
     "stream_config": {
         "users": {
