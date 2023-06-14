@@ -67,7 +67,7 @@ class TapMSGraph(Tap):
             th.BooleanType,
             default=False,
             allowed_values=[True, False],
-            description="Include '@odata_type' field when returned from API."
+            description="Include '@odata_type' field when returned from API.",
         ),
         th.Property(
             "api_version",
