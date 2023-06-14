@@ -43,6 +43,7 @@ tap-ms-graph --about --format=markdown
 | client_id           | True     | None    | The application ID that the Azure app registration portal assigned when you registered your app. |
 | client_secret       | True     | None    | The client secret that you generated for your app in the app registration portal. |
 | stream_config       | False    | None    | Custom configuration for streams. |
+| include_odata_type  | False    | False   | Include '@odata_type' field when returned from API.|
 | api_version         | False    | v1.0    | The version of the Microsoft Graph API to use |
 | auth_url            | False    | None    | Override the Azure AD authentication base URL. Required if using a national cloud. |
 | api_url             | False    | None    | Override the Graph API service base URL. Required if using a national cloud. |
