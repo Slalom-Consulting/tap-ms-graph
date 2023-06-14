@@ -63,6 +63,13 @@ class TapMSGraph(Tap):
             description="Custom configuration for streams.",
         ),
         th.Property(
+            "include_odata_type",
+            th.BooleanType,
+            default=False,
+            allowed_values=[True, False],
+            description="Include '@odata_type' field when returned from API.",
+        ),
+        th.Property(
             "api_version",
             th.StringType,
             default="v1.0",

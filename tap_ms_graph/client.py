@@ -173,7 +173,10 @@ class MSGraphChildStream(MSGraphStream):
     @property
     def schema(self):
         schema = super().schema
-        odata_type = {"@odata.type": {"type": ["string", "null"]}}
+
+        odata_type = {}
+        if self.config.get("include_odata_type", False):
+            odata_type = {"@odata.type": {"type": ["string", "null"]}}
 
         schema["properties"] = {
             **self.parent_context_schema,
