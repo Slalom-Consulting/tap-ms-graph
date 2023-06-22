@@ -62,6 +62,12 @@ class TapMSGraph(Tap):
             ),
             description="Custom configuration for streams.",
         ),
+        # Added for custom Terraform implementation.
+        th.Property(
+            "stream_config_string",
+            th.StringType,
+            description="(Depricated) Custom configuration for streams as a json encoded string.",
+        ),
         th.Property(
             "include_odata_type",
             th.BooleanType,

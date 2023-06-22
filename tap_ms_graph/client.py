@@ -92,6 +92,13 @@ class MSGraphStream(RESTStream):
     def get_stream_config(self) -> dict:
         """Get config for stream."""
         stream_configs = self.config.get("stream_config", {})
+
+        # Added for custom Terraform implementation.
+        if not stream_configs:
+            str_config = self.config.get("stream_config_string", "")
+            if str_config:
+                stream_configs = json.loads(str_config)
+
         return stream_configs.get(self.name, {})
 
     def get_stream_params(self) -> dict:
