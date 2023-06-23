@@ -66,7 +66,8 @@ class TapMSGraph(Tap):
         th.Property(
             "stream_config_string",
             th.StringType,
-            description="(Depricated) Custom configuration for streams as a json encoded string.",
+            description="(Depricated) \
+            Custom configuration for streams as a json encoded string.",
         ),
         th.Property(
             "include_odata_type",
