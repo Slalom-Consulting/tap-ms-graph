@@ -13,9 +13,9 @@ from tap_ms_graph.streams import (
 )
 
 STREAM_TYPES = [
-#    GroupsStream,
-#    GroupMembersStream,
-#    SubscribedSkusStream,
+    GroupsStream,
+    GroupMembersStream,
+    SubscribedSkusStream,
     UsersStream,
 ]
 
