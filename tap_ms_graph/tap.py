@@ -36,17 +36,24 @@ class TapMSGraph(Tap):
         th.Property(
             "client_id",
             th.StringType,
-            required=True,
+            required=False,
             description="The application ID that the Azure app registration \
                 portal assigned to the registered app.",
         ),
         th.Property(
             "client_secret",
             th.StringType,
-            required=True,
+            required=False,
             secret=True,
             description="The client secret generated for the app \
                 in the app registration portal.",
+        ),
+        th.Property(
+            "managed_identity",
+            th.StringType,
+            required=False,
+            description="The user-assigned managed identity to use for \
+                authentication.",
         ),
         th.Property(
             "stream_config",

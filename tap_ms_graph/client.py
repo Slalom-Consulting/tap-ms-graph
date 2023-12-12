@@ -11,6 +11,8 @@ import requests
 from memoization import cached
 from singer_sdk.streams import RESTStream
 
+from azure.identity import DefaultAzureCredential, ManagedIdentityCredential,WorkloadIdentityCredential
+from singer_sdk.authenticators import BearerTokenAuthenticator
 from tap_ms_graph.auth import MSGraphAuthenticator
 from tap_ms_graph.pagination import MSGraphPaginator
 from tap_ms_graph.schema import get_schema, get_type_schema
@@ -59,8 +61,24 @@ class MSGraphStream(RESTStream):
 
     @property
     @cached  # type: ignore[override]
-    def authenticator(self) -> MSGraphAuthenticator:
-        return MSGraphAuthenticator(self)
+    def authenticator(self) -> BearerTokenAuthenticator:
+        ad_scope = "https://graph.microsoft.com/.default"
+        if self.config.get("client_secret"):
+            return MSGraphAuthenticator(self)
+
+        elif self.config.get("managed_identity"):
+            self.logger.info("Used managed Identity")
+            creds = ManagedIdentityCredential(client_id = self.config["managed_identity"])
+            token = creds.get_token(ad_scope)
+            return BearerTokenAuthenticator.create_for_stream(self, token=token.token)
+
+        else:
+            self.logger.info("INFO: used default cred")
+            creds = DefaultAzureCredential()
+            token = creds.get_token(ad_scope)
+
+            return BearerTokenAuthenticator.create_for_stream(self, token=token.token)
+
 
     @property
     def http_headers(self) -> dict:
